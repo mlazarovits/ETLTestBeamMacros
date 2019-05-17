@@ -1,5 +1,5 @@
 #include "map_plotter.h"
-
+using namespace std;
 void map_plotter::makeMaps(){
 
 	t = new TChain("pulse");
@@ -7,8 +7,9 @@ void map_plotter::makeMaps(){
 	InitBranches();
 	uint nentries= t->GetEntries();
 	cout<<"Loaded trees with  "<<nentries<<" events."<<endl;
-
-	TString outFileName = Form("output/%s.root",tag.Data());
+	outDir = Form("output/%s",tag.Data());
+	gSystem->mkdir(outDir);
+	TString outFileName = Form("%s/%s.root",outDir.Data(),tag.Data());
 	outRootFile = new TFile(outFileName,"recreate");
 	channel_map = new TH2F("channel_map","channel map",nbinsX,minX,maxX,nbinsY,minY,maxY);
 
@@ -27,15 +28,10 @@ void map_plotter::makeMaps(){
 		name = Form("h_map_nhits_%i",ib);
 		v_map_nhits.push_back(new TH2F(name,name,nbinsX,minX,maxX,nbinsY,minY,maxY));
 
-		name = Form("h_x_eff_top_%i",ib);
-		v_x_eff_top.push_back(new TH1F(name,name,nbinsX,minX,maxX));
-		name = Form("h_x_nhits_top_%i",ib);
-		v_x_nhits_top.push_back(new TH1F(name,name,nbinsX,minX,maxX));
-
-		name = Form("h_x_eff_bot_%i",ib);
-		v_x_eff_bot.push_back(new TH1F(name,name,nbinsX,minX,maxX));
-		name = Form("h_x_nhits_bot_%i",ib);
-		v_x_nhits_bot.push_back(new TH1F(name,name,nbinsX,minX,maxX));
+		name = Form("h_x_eff_%i",ib);
+		v_x_eff.push_back(new TH1F(name,name,nbinsX,minX,maxX));
+		name = Form("h_x_nhits_%i",ib);
+		v_x_nhits.push_back(new TH1F(name,name,nbinsX,minX,maxX));
 
 		name = Form("h_y_eff_%i",ib);
 		v_y_eff.push_back(new TH1F(name,name,nbinsY,minY,maxY));
@@ -50,17 +46,16 @@ void map_plotter::makeMaps(){
 
 
 		name = Form("h3_amp_%i",ib);
-		v_h_amp.push_back(new TH3F(name,name,nbinsX/gainbinfactor,minX,maxX,nbinsY/gainbinfactor,minY,maxY,nbinsAmp,minAmp,maxAmp));
+		v_h_amp.push_back(new TH3F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY,nbinsAmp,minAmp,maxAmp));
 		name = Form("h_map_amp_%i",ib);
 		if (ib==0) v_map_amp.push_back(new TH2F(name,name,nbinsX,minX,maxX,nbinsY,minY,maxY));
-		else v_map_amp.push_back(new TH2F(name,name,nbinsX/gainbinfactor,minX,maxX,nbinsY/gainbinfactor,minY,maxY));
+		else v_map_amp.push_back(new TH2F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY));
 
-		name = Form("h_x_amp_top_%i",ib);
-		v_x_amp_top.push_back(new TH1F(name,name,nbinsX/gainbinfactor,minX,maxX));
-		name = Form("h_x_amp_bot_%i",ib);
-		v_x_amp_bot.push_back(new TH1F(name,name,nbinsX/gainbinfactor,minX,maxX));
+		name = Form("h_x_amp_%i",ib);
+		v_x_amp.push_back(new TH1F(name,name,nbinsX/rebinFactor,minX,maxX));
+		
 		name = Form("h_y_amp_%i",ib);
-		v_y_amp.push_back(new TH1F(name,name,nbinsY/gainbinfactor,minY,maxY));
+		v_y_amp.push_back(new TH1F(name,name,nbinsY/rebinFactor,minY,maxY));
 
 
 		name = Form("h3_run_%i",ib);
@@ -76,27 +71,22 @@ void map_plotter::makeMaps(){
 
 		
 		name = Form("h3_time_%i",ib);
-		v_h_time.push_back(new TH3F(name,name,nbinsX/gainbinfactor,minX,maxX,nbinsY/gainbinfactor,minY,maxY,nbinsTime,minTime,maxTime));
+		v_h_time.push_back(new TH3F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY,nbinsTime,minTime,maxTime));
 		name = Form("h_map_deltat_%i",ib);
-		v_map_deltat.push_back(new TH2F(name,name,nbinsX/gainbinfactor,minX,maxX,nbinsY/gainbinfactor,minY,maxY));
+		v_map_deltat.push_back(new TH2F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY));
 		name = Form("h_map_sigmat_%i",ib);
 		if (ib==0) v_map_sigmat.push_back(new TH2F(name,name,nbinsX,minX,maxX,nbinsY,minY,maxY));
-		else v_map_sigmat.push_back(new TH2F(name,name,nbinsX/gainbinfactor,minX,maxX,nbinsY/gainbinfactor,minY,maxY));
+		else v_map_sigmat.push_back(new TH2F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY));
 
-		name = Form("h_x_deltat_top_%i",ib);
-		v_x_deltat_top.push_back(new TH1F(name,name,nbinsX/gainbinfactor,minX,maxX));
-		name = Form("h_x_sigmat_top_%i",ib);
-		v_x_sigmat_top.push_back(new TH1F(name,name,nbinsX/gainbinfactor,minX,maxX));
-
-		name = Form("h_x_deltat_bot_%i",ib);
-		v_x_deltat_bot.push_back(new TH1F(name,name,nbinsX/gainbinfactor,minX,maxX));
-		name = Form("h_x_sigmat_bot_%i",ib);
-		v_x_sigmat_bot.push_back(new TH1F(name,name,nbinsX/gainbinfactor,minX,maxX));
+		name = Form("h_x_deltat_%i",ib);
+		v_x_deltat.push_back(new TH1F(name,name,nbinsX/rebinFactor,minX,maxX));
+		name = Form("h_x_sigmat_%i",ib);
+		v_x_sigmat.push_back(new TH1F(name,name,nbinsX/rebinFactor,minX,maxX));
 
 		name = Form("h_y_deltat_%i",ib);
-		v_y_deltat.push_back(new TH1F(name,name,nbinsY/gainbinfactor,minY,maxY));
+		v_y_deltat.push_back(new TH1F(name,name,nbinsY/rebinFactor,minY,maxY));
 		name = Form("h_y_sigmat_%i",ib);
-		v_y_sigmat.push_back(new TH1F(name,name,nbinsY/gainbinfactor,minY,maxY));
+		v_y_sigmat.push_back(new TH1F(name,name,nbinsY/rebinFactor,minY,maxY));
 		
 	}
 
@@ -104,7 +94,7 @@ void map_plotter::makeMaps(){
 
 	int ngoodevents=0;
 	int ngoodtimingevents=0;
-	if(debug) nentries=25;
+	if(debug) nentries=100000;
 	for(int i=0;i<nentries;i++){
 		t->GetEntry(i);
 		if (i % 10000 == 0) {
@@ -119,10 +109,7 @@ void map_plotter::makeMaps(){
 		pair<int,int> nhits_and_channel =nLGADHitsAndChannel();
 		int nhits= nhits_and_channel.first;
 		int channel = nhits_and_channel.second;
-		//Require no more than 1 LGAD pad hit to veto showers and avoid ambiguity
-
-
-		//if(nhits>1) continue;
+	
 		ngoodevents++;
 		if(debug){
 			cout<<"Event number "<<i<<endl;
@@ -185,14 +172,6 @@ void map_plotter::makeMaps(){
 	}
 
 	cout<<"Processed "<<nentries<<" events, "<<ngoodevents<<" good events."<<endl;
-		//Rebin gain plots:
-		//Doesn't work correctly for 3D hist?
-		// for(uint ie = 0; ie < v_h_eff.size(); ie++){
-		// 	v_h_amp[ie]->RebinX();
-		// 	v_h_amp[ie]->RebinY();
-		// }
-
-		
 		
 		
 		//Construct maps from 3D hists
@@ -202,11 +181,8 @@ void map_plotter::makeMaps(){
 			ConvertMap(v_h_eff_timing[ie],v_map_eff_timing[ie],4);
 			ConvertMap(v_h_eff[ie],v_map_nhits[ie],2);
 
-			Convert1D(v_h_eff[ie],v_x_eff_top[ie],4,true);
-			Convert1D(v_h_eff[ie],v_x_nhits_top[ie],2,true);
-
-			// Convert1D(v_h_eff[ie],v_x_eff_bot[ie],4,true);
-			// Convert1D(v_h_eff[ie],v_x_nhits_bot[ie],2,1);
+			Convert1D(v_h_eff[ie],v_x_eff[ie],4,true);
+			Convert1D(v_h_eff[ie],v_x_nhits[ie],2,true);
 
 			Convert1D(v_h_eff[ie],v_y_eff[ie],4,false);
 			Convert1D(v_h_eff[ie],v_y_nhits[ie],2,false);
@@ -214,10 +190,8 @@ void map_plotter::makeMaps(){
 			v_h_eff_timing[ie]->Write();
 			v_map_eff[ie]->Write();
 			v_map_nhits[ie]->Write();
-			v_x_eff_top[ie]->Write();
-			v_x_nhits_top[ie]->Write();
-			v_x_eff_bot[ie]->Write();
-			v_x_nhits_bot[ie]->Write();
+			v_x_eff[ie]->Write();
+			v_x_nhits[ie]->Write();
 			v_y_eff[ie]->Write();
 			v_y_nhits[ie]->Write();
 		}
@@ -229,13 +203,11 @@ void map_plotter::makeMaps(){
 		for(uint ie = 1; ie < v_h_amp.size(); ie++){
 			outRootFile->Cd(Form("%s:/pad%i",outFileName.Data(),ie));
 			ConvertMap(v_h_amp[ie],v_map_amp[ie],3);
-			Convert1D(v_h_amp[ie],v_x_amp_top[ie],3,true);
-//			Convert1D(v_h_amp[ie],v_x_amp_bot[ie],3,1);
+			Convert1D(v_h_amp[ie],v_x_amp[ie],3,true);
 			Convert1D(v_h_amp[ie],v_y_amp[ie],3,false);
 			v_h_amp[ie]->Write();
 			v_map_amp[ie]->Write();
-			v_x_amp_top[ie]->Write();
-			v_x_amp_bot[ie]->Write();
+			v_x_amp[ie]->Write();
 			v_y_amp[ie]->Write();
 		}
 		cout<<"Finished amp maps"<<endl;
@@ -246,10 +218,9 @@ void map_plotter::makeMaps(){
 			v_map_deltat[ie]->Write();
 			ConvertMap(v_h_time[ie],v_map_sigmat[ie],1);
 			v_map_sigmat[ie]->Write();
-			Convert1D(v_h_time[ie],v_x_deltat_top[ie],0,true);
-			v_x_deltat_top[ie]->Write();
-			Convert1D(v_h_time[ie],v_x_sigmat_top[ie],1,true);
-			v_x_sigmat_bot[ie]->Write();
+			Convert1D(v_h_time[ie],v_x_deltat[ie],0,true);
+			v_x_deltat[ie]->Write();
+			Convert1D(v_h_time[ie],v_x_sigmat[ie],1,true);
 
 			Convert1D(v_h_time[ie],v_y_deltat[ie],0,false);
 			v_y_deltat[ie]->Write();
@@ -263,21 +234,37 @@ void map_plotter::makeMaps(){
 		FillChannelMap(channel_map, v_map_eff);
 		channel_map->Write();
 
+		CosmeticMap(v_map_eff[0],Form("Hit efficiency, %.0f mV",hitThres));
 		FillSummaryMap(v_map_eff,channel_map);
+		
+		CosmeticMap(v_map_eff_timing[0],Form("Timestamp reco efficiency, %.0f mV",hitThres));
 		FillSummaryMap(v_map_eff_timing,channel_map);
+		
+		CosmeticMap(v_map_amp[0],"Most probable value [mV]");
 		FillSummaryMapCoarse(v_map_amp,v_map_eff[0],channel_map);
+		
+		CosmeticMap(v_map_sigmat[0],"Time resolution [s]");
 		FillSummaryMapCoarse(v_map_sigmat,v_map_eff[0],channel_map);
+		
+		CosmeticMap(v_map_deltat[0],"#DeltaT w.r.t. MCP [s]");
 		FillSummaryMap(v_map_deltat,channel_map);
-
-		FillSummary1D(v_x_eff_top,channel_map,true);
-		FillSummary1D(v_x_amp_top,channel_map,true);
-		FillSummary1D(v_x_sigmat_top,channel_map,true);
-		FillSummary1D(v_x_deltat_top,channel_map,true);
+		
+		FillSummary1D(v_x_eff,channel_map,true); 
+		FillSummary1D(v_x_amp,channel_map,true);
+		FillSummary1D(v_x_sigmat,channel_map,true);
+		FillSummary1D(v_x_deltat,channel_map,true);
 
 		FillSummary1D(v_y_eff,channel_map,false);
 		FillSummary1D(v_y_amp,channel_map,false);
 		FillSummary1D(v_y_sigmat,channel_map,false);
 		FillSummary1D(v_y_deltat,channel_map,false);
+
+
+		PrintSummaryMap(v_map_eff[0],"map_efficiency");
+		PrintSummaryMap(v_map_amp[0],"map_mpv");
+		PrintSummaryMap(v_map_sigmat[0],"map_sigmat");
+		PrintSummaryMap(v_map_deltat[0],"map_deltat");
+		
 
 		//Fill distributions for boxes 
 		// for(uint ie = 0; ie < v_h_amp.size(); ie++){
@@ -290,62 +277,7 @@ void map_plotter::makeMaps(){
 		// 	}
 		// }
 
-
-		// TH2F* gain_map = (TH2F*)v_map_amp[0]->Clone("amp_cosmetic");
-		// CleanMap(gain_map,-0.26,16.45,17.9,22.,false);
-		// CosmeticMap(gain_map,"Most probable value [mV]");
-		// gain_map->SetMinimum(20.);
-
-
-		// cosmetic_map = (TH2F*)v_map_eff[0]->Clone("cosmetic");
-		// cosmetic_map_scaled = (TH2F*)v_map_eff[0]->Clone("cosmetic_scale");
-
-		// CleanMap(cosmetic_map,-0.26,16.65,17.9,22.2,false);
-		// CosmeticMap(cosmetic_map,"Hit efficiency");
-
-		// CleanMap(cosmetic_map_scaled,-0.26,16.65,17.9,22.2,true);
-		// CosmeticMap(cosmetic_map_scaled,"Hit efficiency");
-		// cosmetic_map_scaled->SetMaximum(1.);
-
-		// TCanvas c1("","",1100,500);
-		// c1.SetLeftMargin(0.07);
-		// c1.SetRightMargin(0.15);
-		// c1.SetBottomMargin(0.13);
-
-
-		// cosmetic_map->Write();
-		// cosmetic_map->Draw("colz");
-		// DrawCMS();
-		// c1.Print("efficiency_map_unscaled.pdf");
-		// c1.Print("efficiency_map_unscaled.C");
-		// c1.Print("efficiency_map_unscaled.jpg");
-
-		// TCanvas c2("","",1100,500);
-		// c2.SetLeftMargin(0.07);
-		// c2.SetRightMargin(0.15);
-		// c2.SetBottomMargin(0.13);
-
-		// cosmetic_map_scaled->Write();
-		// cosmetic_map_scaled->Draw("colz");
-		// DrawCMS();
-		// c2.Print("efficiency_map_scaled.pdf");
-		// c2.Print("efficiency_map_scaled.C");
-		// c2.Print("efficiency_map_scaled.jpg");
-
-
-		// TCanvas c3("","",1100,500);
-		// c3.SetLeftMargin(0.07);
-		// c3.SetRightMargin(0.15);
-		// c3.SetBottomMargin(0.13);
-
-		// gain_map->Write();
-		// gain_map->Draw("colz");
-		// DrawCMS();
-		// c3.Print("gain_map.pdf");
-
-
-		// c1.cd();
-
+	
 		// TLine line = TLine();
 		// line.SetLineStyle(3);
 
@@ -412,7 +344,17 @@ void map_plotter::makeMaps(){
 
 	outRootFile->Close();
 }
+void map_plotter::PrintSummaryMap(TH2F * h2,TString name){
 
+	TCanvas c1("","",1100,500);
+	c1.SetLeftMargin(0.07);
+	c1.SetRightMargin(0.15);
+	c1.SetBottomMargin(0.13);
+	h2->Draw("colz");
+	DrawCMS();
+	c1.Print(Form("%s/%s_%s.pdf",outDir.Data(),name.Data(),tag.Data()));
+
+}
 
 void map_plotter::CleanMap(TH2F * map, float xmin, float xmax, float ymin, float ymax, bool scale){
 	for(uint ix=0;ix<map->GetNbinsX();ix++){
@@ -477,15 +419,15 @@ void map_plotter::FillSummaryMapCoarse(vector<TH2F*> v_map, TH2F* effmap, TH2F *
 				if(effmap->GetBinContent(eff_bin)>0.5){
 					v_map[0]->SetBinContent(ix,iy,v_map[channel_map->GetBinContent(bin_map)]->GetBinContent(source_bin));
 				}
-				else{//if efficiency < 50%, allow if both of the neighbors along x or y are > 50%
+				// else{//if efficiency < 50%, allow if both of the neighbors along x or y are > 50%
 					
-					int left = effmap->FindBin(x-binwidthX,y);
-					int right = effmap->FindBin(x+binwidthX,y);
-					int top = effmap->FindBin(x,y+binwidthY);
-					int bottom = effmap->FindBin(x,y-binwidthY);
-					if((effmap->GetBinContent(left)>0.5 && effmap->GetBinContent(right)>0.5) || (effmap->GetBinContent(top)>0.5 && effmap->GetBinContent(bottom)>0.5))
-						v_map[0]->SetBinContent(ix,iy,v_map[channel_map->GetBinContent(bin_map)]->GetBinContent(source_bin));
-				}
+				// 	int left = effmap->FindBin(x-binwidthX,y);
+				// 	int right = effmap->FindBin(x+binwidthX,y);
+				// 	int top = effmap->FindBin(x,y+binwidthY);
+				// 	int bottom = effmap->FindBin(x,y-binwidthY);
+				// 	if((effmap->GetBinContent(left)>0.5 && effmap->GetBinContent(right)>0.5) || (effmap->GetBinContent(top)>0.5 && effmap->GetBinContent(bottom)>0.5))
+				// 		v_map[0]->SetBinContent(ix,iy,v_map[channel_map->GetBinContent(bin_map)]->GetBinContent(source_bin));
+				// }
 			}
 		}
 	}
@@ -510,6 +452,7 @@ void map_plotter::FillSummary1D(vector<TH1F*> v_1D, TH2F * channel_map, bool isX
 		}
 		
 	}
+	Cosmetic1D(v_1D[0]);
 	v_1D[0]->Write();
 }
 
@@ -533,8 +476,8 @@ void map_plotter::Convert1D(TH3F * h3, TH1F * h1, int type, bool isX){
 
 	for(int ix=1;ix<=nbins;ix++){
 		TH1F * h;
-		if (isX) h = (TH1F *) h3->ProjectionZ("temp",ix,ix,ySliceMin,ySliceMax);
-		else h = (TH1F *) h3->ProjectionZ("temp",xSliceMin,xSliceMax,ix,ix);
+		if (isX) h = (TH1F *) h3->ProjectionZ("temp",ix,ix,h3->GetYaxis()->FindBin(ySliceMin),h3->GetYaxis()->FindBin(ySliceMax));
+		else h = (TH1F *) h3->ProjectionZ("temp",h3->GetXaxis()->FindBin(xSliceMin),h3->GetXaxis()->FindBin(xSliceMax),ix,ix);
 
 		if(type==0){
 			if(h->GetEntries() > 20){
@@ -663,7 +606,6 @@ int map_plotter::indexGoodPhotekHit(){
 
 }
 
-
 void map_plotter::InitBranches(){
 
 
@@ -688,7 +630,4 @@ void map_plotter::InitBranches(){
 
 
 }
-
-
-
 

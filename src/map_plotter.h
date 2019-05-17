@@ -54,7 +54,10 @@ public:
 	void CleanMap(TH2F * map, float xmin, float xmax, float ymin, float ymax, bool scale);
 	float GetEff(TH3F * h3, int x_lo, int x_hi, int y_lo, int y_hi, int den=0);
 
+	void PrintSummaryMap(TH2F * h2,TString name);
+
 	TString tag;
+	TString outDir;
 	TString chainPath;
 	bool debug;
 	int run_start;
@@ -85,7 +88,7 @@ public:
 	//efficiency
 	int nbinsX;
 	int nbinsY;
-	int gainbinfactor; //coarser binning for gain maps
+	int rebinFactor; //coarser binning for gain maps
 
 
 	int minX;
@@ -126,8 +129,8 @@ public:
 
 	Int_t run;
 	Int_t gconf;
-	vector<int> *pads;
-	vector<string> *sensors;
+	vector<int> *pads = new vector<int>();
+	vector<string> *sensors = new vector<string>();
 
 	vector<TH3F*> v_h_eff;
 	vector<TH3F*> v_h_eff_timing;
@@ -146,17 +149,11 @@ public:
 
 	TH2F * cosmetic_map;
 
-	vector<TH1F*> v_x_eff_top;
-	vector<TH1F*> v_x_nhits_top;
-	vector<TH1F*> v_x_amp_top;
-	vector<TH1F*> v_x_deltat_top;
-	vector<TH1F*> v_x_sigmat_top;
-
-	vector<TH1F*> v_x_eff_bot;
-	vector<TH1F*> v_x_nhits_bot;
-	vector<TH1F*> v_x_amp_bot;
-	vector<TH1F*> v_x_deltat_bot;
-	vector<TH1F*> v_x_sigmat_bot;
+	vector<TH1F*> v_x_eff;
+	vector<TH1F*> v_x_nhits;
+	vector<TH1F*> v_x_amp;
+	vector<TH1F*> v_x_deltat;
+	vector<TH1F*> v_x_sigmat;
 
 	vector<TH1F*> v_y_eff;
 	vector<TH1F*> v_y_nhits;
