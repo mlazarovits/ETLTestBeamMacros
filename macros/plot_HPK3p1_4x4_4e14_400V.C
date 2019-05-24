@@ -13,11 +13,11 @@ int main(int argc, char **argv)
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
 	//Define rotation angle and manual adjustments of x and y
-	double dx = 12.;
-  	double dy = 0.4;
-  	double theta = TMath::ATan(dy/dx);
-  	double costheta = TMath::Cos(theta);
-  	double sintheta = TMath::Sin(theta);
+	float dx = 12.;
+  	float dy = 0.4;
+  	float theta = TMath::ATan(dy/dx);
+  	float costheta = TMath::Cos(theta);
+  	float sintheta = TMath::Sin(theta);
 	mp.angle = new vector<float>{-theta,-theta}; //degrees
 	mp.x_offset= new vector<float>{0.040,0.040}; //mm
 	mp.y_offset= new vector<float>{0.0,0.0}; //mm
