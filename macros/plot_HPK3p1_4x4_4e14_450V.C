@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	mp.debug=false;
 	//Define run range
 	mp.run_start = new vector<int>{13245,13249};
-	mp.run_end = new vector<int>{132248,13370};
+	mp.run_end = new vector<int>{13248,13370};
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
 	//Define rotation angle and manual adjustments of x and y
