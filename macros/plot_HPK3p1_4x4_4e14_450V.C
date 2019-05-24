@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	mp.minY=30; mp.maxY=38;
 
 	//Define amplitude, time binning and range, and scope saturation.
-	mp.saturation =640.;
+	mp.saturation =270.;
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
