@@ -19,9 +19,9 @@ int main(int argc, char **argv)
   	float theta = TMath::ATan(dy/dx);
   	float costheta = TMath::Cos(theta);
   	float sintheta = TMath::Sin(theta);
-	mp.angle= -TMath::ATan(dy/dx); //degrees
-	mp.x_offset=0.040; //mm
-	mp.y_offset=0.0; //mm
+	mp.angle = new vector<float>{-theta,-theta}; //degrees
+	mp.x_offset= new vector<float>{0.040,0.040}; //mm
+	mp.y_offset= new vector<float>{0.0,0.0}; //mm
 
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=160;//30;
@@ -43,10 +43,16 @@ int main(int argc, char **argv)
 	mp.photekMax=270;
 
 	// Define geometric boundaries for 1D "slices"
-	mp.xSliceMin=9.;
-	mp.xSliceMax=11.3;
-	mp.ySliceMin=33.5;
-	mp.ySliceMax=34.2;
+	mp.xSliceMin={6,9,12,15};
+	mp.xSliceMax={8.2,11.2,14.2,17.2};
+	mp.ySliceMin={32.6,33.6,34.6,35.6};
+	mp.ySliceMax={33,34,35,36};
+
+	//Specify range for colz maps. -1 is ignored.
+	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
+	mp.zMinGain=70.; mp.zMaxGain=110.; 
+	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.08e-9; 
+	mp.zMinDeltat=7.75e-9; mp.zMaxDeltat=-1.;	
 
 	//Do everything
     mp.makeMaps();

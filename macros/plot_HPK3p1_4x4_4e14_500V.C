@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 	mp.minTime=7.2e-9; mp.maxTime=8.8e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=40.;
+	mp.hitThres=20.;
 	mp.photekMin=15;
 	mp.photekMax=270;
 
