@@ -9,16 +9,12 @@ int main(int argc, char **argv)
 	mp.chainPath = "root://cmseos.fnal.gov//store/group/cmstestbeam/2019_04_April_CMSTiming/KeySightScope/RecoData/TimingDAQRECO/RecoWithTracks/v1/confInfo/";
 	mp.debug=false;
 	//Define run range
-	mp.run_start = new vector<int>{13187,13222};
-	mp.run_end = new vector<int>{13204,13427};
+	mp.run_start = new vector<int>{13187,13245};
+	mp.run_end = new vector<int>{13204,13370};
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
 	//Define rotation angle and manual adjustments of x and y
-	float dx = 12.;
-  	float dy = 0.4;
-  	float theta = 1.909; //TMath::ATan(dy/dx);
-  	float costheta = TMath::Cos(theta);
-  	float sintheta = TMath::Sin(theta);
+  	float theta = 1.909; //from spreadsheet
 	mp.angle = new vector<float>{-theta,-theta}; //degrees
 	mp.x_offset= new vector<float>{0.040,0.040}; //mm
 	mp.y_offset= new vector<float>{0.0,0.0}; //mm
