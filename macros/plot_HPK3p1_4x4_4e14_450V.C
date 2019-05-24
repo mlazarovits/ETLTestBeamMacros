@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	//Define rotation angle and manual adjustments of x and y
 	float dx = 12.;
   	float dy = 0.4;
-  	float theta = 1.909 //TMath::ATan(dy/dx);
+  	float theta = 1.909; //TMath::ATan(dy/dx);
   	float costheta = TMath::Cos(theta);
   	float sintheta = TMath::Sin(theta);
 	mp.angle = new vector<float>{-theta,-theta}; //degrees
