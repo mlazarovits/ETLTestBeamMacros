@@ -2,17 +2,16 @@
 using namespace std;
 void map_plotter::makeMaps(){
 
-	t = new TChain("pulse");
-	for(int irun=run_start;irun<=run_end;irun++) t->Add(Form("%s/run_scope%i_info.root",chainPath.Data(),irun));
-	InitBranches();
-	uint nentries= t->GetEntries();
-	cout<<"Loaded trees with  "<<nentries<<" events."<<endl;
+	if(run_start->size()!=run_end->size() || run_start->size()!=x_offset->size() || run_start->size()!=y_offset->size() || run_start->size()!=angle->size()){
+		cout<<"Run ranges, x and y offsets, and rotation angles must all be the same dimension."<<endl;
+	}
+
 	outDir = Form("output/%s",tag.Data());
 	gSystem->mkdir(outDir);
 	TString outFileName = Form("%s/%s.root",outDir.Data(),tag.Data());
 	outRootFile = new TFile(outFileName,"recreate");
-	channel_map = new TH2F("channel_map","channel map",nbinsX,minX,maxX,nbinsY,minY,maxY);
 
+	channel_map = new TH2F("channel_map","channel map",nbinsX,minX,maxX,nbinsY,minY,maxY);
 	for(uint ib = 0; ib < npad+1; ib++){
 		if (ib>0) outRootFile->mkdir(Form("pad%i",ib));
 		TString name = Form("h3_eff_%i",ib);
@@ -60,15 +59,6 @@ void map_plotter::makeMaps(){
 
 		name = Form("h3_run_%i",ib);
 		v_h_run.push_back(new TH3F(name,name,nbinsX,minX,maxX,nbinsY,minY,maxY,40,2900,3700));
-
-
-		// for(uint ibox=0;ibox<box_x_lo.size();ibox++){
-		// 	name = Form("dist_amp_%i_%i",ib,ibox);
-		// 	v_amp_dists.push_back(new TH1D(name,name,nbinsAmp,minAmp,maxAmp));
-		// 	name = Form("run_amp_%i_%i",ib,ibox);
-		// 	v_run_dists.push_back(new TH1D(name,name,40,2900,3700));
-		// }
-
 		
 		name = Form("h3_time_%i",ib);
 		v_h_time.push_back(new TH3F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY,nbinsTime,minTime,maxTime));
@@ -89,50 +79,54 @@ void map_plotter::makeMaps(){
 		v_y_sigmat.push_back(new TH1F(name,name,nbinsY/rebinFactor,minY,maxY));
 		
 	}
-
-
-
+	
 	int ngoodevents=0;
 	int ngoodtimingevents=0;
-	if(debug) nentries=100000;
-	for(int i=0;i<nentries;i++){
-		t->GetEntry(i);
-		if (i % 10000 == 0) {
-		  fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries);
-		}
-		fflush(stdout);
+	t = new TChain("pulse");
+	for(int i_runrange=0;i_runrange<run_start->size();i_runrange++){
+		for(int irun=run_start->at(i_runrange);irun<=run_end->at(i_runrange);irun++) t->Add(Form("%s/run_scope%i_info.root",chainPath.Data(),irun));
+		InitBranches();
+		uint nentries= t->GetEntries();
+		cout<<"Loaded trees from runs "<<run_start->at(i_runrange)<<" through "<<run_end->at(i_runrange)<<", with "<<nentries<<" events."<<endl;
+		if(debug) nentries=100000;
+		for(int i=0;i<nentries;i++){
+			t->GetEntry(i);
+			if (i % 10000 == 0) {
+				fprintf(stdout, "\r  Processed events: %8d of %8d ", i, nentries);
+			}
+			fflush(stdout);
 
 		//Skip events without exactly one good track
-		if(ntracks!=1 || npix < 1 || nback < 1 ) continue;
-		
-		
-		pair<int,int> nhits_and_channel =nLGADHitsAndChannel();
-		int nhits= nhits_and_channel.first;
-		int channel = nhits_and_channel.second;
-	
-		ngoodevents++;
-		if(debug){
-			cout<<"Event number "<<i<<endl;
-			cout<<"channel "<<channel<<endl;
-			if(channel>=0){
-			cout<<"amp "<<amp[channel]<<endl;
-			cout<<"pad_index "<<pads->at(channel)<<endl;
-			cout<<"nhits "<<nhits<<endl;
-		}
-		}
+			if(ntracks!=1 || npix < 1 || nback < 1 ) continue;
 
-		int ptkindex = indexGoodPhotekHit();
+
+			pair<int,int> nhits_and_channel =nLGADHitsAndChannel();
+			int nhits= nhits_and_channel.first;
+			int channel = nhits_and_channel.second;
+
+			ngoodevents++;
+			if(debug){
+				cout<<"Event number "<<i<<endl;
+				cout<<"channel "<<channel<<endl;
+				if(channel>=0){
+					cout<<"amp "<<amp[channel]<<endl;
+					cout<<"pad_index "<<pads->at(channel)<<endl;
+					cout<<"nhits "<<nhits<<endl;
+				}
+			}
+
+			int ptkindex = indexGoodPhotekHit();
 
 		//Get amplitude, time of real hit
 		//Fill hists
 
 		//Allow for rotation & offset of coordinates
-		pair<float,float> rotated = Rotate(x_dut[2],y_dut[2],angle);
-		float x_adjust = rotated.first + x_offset;
-		float y_adjust = rotated.second + y_offset;
+			pair<float,float> rotated = Rotate(x_dut[2],y_dut[2],angle->at(i_runrange));
+			float x_adjust = rotated.first + x_offset->at(i_runrange);
+			float y_adjust = rotated.second + y_offset->at(i_runrange);
 
 
-		if(nhits==1)
+			if(nhits==1)
 		{	//Record hit for hit channel.
 			int pad_index = pads->at(channel);//getPadIndex(channel);
 			//Efficiency for simple threshold.
@@ -169,10 +163,12 @@ void map_plotter::makeMaps(){
 		}
 		
 
-	}
-
+	}//end of one run range
+	t->Reset();
 	cout<<"Processed "<<nentries<<" events, "<<ngoodevents<<" good events."<<endl;
-		
+}//end of all run ranges
+
+
 		
 		//Construct maps from 3D hists
 		for(uint ie = 1; ie < v_h_eff.size(); ie++){

@@ -60,8 +60,8 @@ public:
 	TString outDir;
 	TString chainPath;
 	bool debug;
-	int run_start;
-	int run_end;
+	vector<int> * run_start;
+	vector<int> * run_end;
 	static const int nchan=4;
 	static const int nchan_lgad=3;
 	static const int npad=16;//3;//16;
@@ -69,9 +69,9 @@ public:
 	float photekMin;
 	float photekMax;
 
-	float angle;
-	float x_offset;
-	float y_offset;
+	vector<float> * angle;
+	vector<float> * x_offset;
+	vector<float> * y_offset;
 	float saturation;
 	//Divide interior of each pad in subsections (3x3 grid)
 	//Specify bounds on one corner, use avg pad width including dead region to extrapolate to other pads
