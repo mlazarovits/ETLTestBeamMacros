@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 	mp.chainPath = "root://cmseos.fnal.gov//store/group/cmstestbeam/2019_04_April_CMSTiming/KeySightScope/RecoData/TimingDAQRECO/RecoWithTracks/v1/confInfo/";
 	mp.debug=false;
 	//Define run range
-	mp.run_start = new vector<int>{13187,13245};
+	mp.run_start = new vector<int>{13187,13222};
 	mp.run_end = new vector<int>{13204,13370};
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
@@ -35,10 +35,10 @@ int main(int argc, char **argv)
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
-	mp.minTime=1.0e-9; mp.maxTime=1.0e-8;
+	mp.minTime=1.0e-10; mp.maxTime=1.0e-7;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=15.;
+	mp.hitThres=40.;
 	mp.photekMin=15;
 	mp.photekMax=270;
 
