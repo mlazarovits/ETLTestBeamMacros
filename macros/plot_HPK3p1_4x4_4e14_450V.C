@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	mp.debug=false;
 	//Define run range
 	mp.run_start = new vector<int>{13187,13222};
-	mp.run_end = new vector<int>{13204,13370};
+	mp.run_end = new vector<int>{13204,13427};
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
 	//Define rotation angle and manual adjustments of x and y
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	mp.minTime=1.0e-9; mp.maxTime=1.0e-8;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=15.;
+	mp.hitThres=20.;
 	mp.photekMin=25;
 	mp.photekMax=55;
 
