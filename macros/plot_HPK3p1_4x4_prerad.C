@@ -37,10 +37,17 @@ int main(int argc, char **argv)
 	mp.photekMax=55;
 
 	// Define geometric boundaries for 1D "slices"
-	mp.xSliceMin=9.;
-	mp.xSliceMax=11.3;
-	mp.ySliceMin=33.5;
-	mp.ySliceMax=34.2;
+	mp.xSliceMin={9.,12.2};
+	mp.xSliceMax={11.3,14.};
+	mp.ySliceMin={33.5,34.5};
+	mp.ySliceMax={34.2,35.1};
+
+	//Specify range for colz maps. -1 is ignored.
+	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
+	mp.zMinGain=50.; mp.zMaxGain=150.; 
+	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.08e-9; 
+	mp.zMinDeltat=-1.; mp.zMaxDeltat=-1.; 
+
 
 	//Do everything
     mp.makeMaps();

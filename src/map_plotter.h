@@ -46,15 +46,15 @@ public:
 	void FillChannelMap(TH2F * map, vector<TH2F*> effs);
 	void FillSummaryMap(vector<TH2F*> v_map, TH2F * channel_map);
 	void FillSummaryMapCoarse(vector<TH2F*> v_map, TH2F* effmap, TH2F * channel_map);
-	void FillSummary1D(vector<TH1F*> v_map, TH2F * channel_map, bool isX);
+	void FillSummary1D(vector<vector<TH1F*> > v_map, TH2F * channel_map, bool isX);
 
 	void ConvertMap(TH3F * h3, TH2F * h2, int type);
-	void Convert1D(TH3F * h3, TH1F * h1, int type, bool isX);
+	void Convert1D(TH3F * h3, vector<TH1F*> h1, int type, bool isX);
 	void FillBox(TH3F * h3, TH1D * h1, int ibox);
 	void CleanMap(TH2F * map, float xmin, float xmax, float ymin, float ymax, bool scale);
 	float GetEff(TH3F * h3, int x_lo, int x_hi, int y_lo, int y_hi, int den=0);
 
-	void PrintSummaryMap(TH2F * h2,TString name);
+	void PrintSummaryMap(TH2F * h2,TString name,float min, float max);
 
 	TString tag;
 	TString outDir;
@@ -97,10 +97,10 @@ public:
 	float maxY;
 
 	//// For 1D projections
-	float xSliceMin;
-	float xSliceMax;
-	float ySliceMin;
-	float ySliceMax;
+	vector<float> xSliceMin;
+	vector<float> xSliceMax;
+	vector<float> ySliceMin;
+	vector<float> ySliceMax;
 
 
 	float nbinsAmp;
@@ -109,6 +109,11 @@ public:
 	float maxAmp;
 	float minTime;
 	float maxTime;
+
+	float zMinEff;float zMaxEff;
+	float zMinGain;float zMaxGain;
+	float zMinDeltat;float zMaxDeltat;
+	float zMinSigmat; float zMaxSigmat;
 
 
 	//////
@@ -149,17 +154,17 @@ public:
 
 	TH2F * cosmetic_map;
 
-	vector<TH1F*> v_x_eff;
-	vector<TH1F*> v_x_nhits;
-	vector<TH1F*> v_x_amp;
-	vector<TH1F*> v_x_deltat;
-	vector<TH1F*> v_x_sigmat;
+	vector<vector<TH1F*> > v_x_eff;
+	vector<vector<TH1F*> > v_x_nhits;
+	vector<vector<TH1F*> > v_x_amp;
+	vector<vector<TH1F*> > v_x_deltat;
+	vector<vector<TH1F*> > v_x_sigmat;
 
-	vector<TH1F*> v_y_eff;
-	vector<TH1F*> v_y_nhits;
-	vector<TH1F*> v_y_amp;
-	vector<TH1F*> v_y_deltat;
-	vector<TH1F*> v_y_sigmat;
+	vector<vector<TH1F*> > v_y_eff;
+	vector<vector<TH1F*> > v_y_nhits;
+	vector<vector<TH1F*> > v_y_amp;
+	vector<vector<TH1F*> > v_y_deltat;
+	vector<vector<TH1F*> > v_y_sigmat;
 
 	vector<TH1D*> v_amp_dists;
 	vector<TH1D*> v_run_dists;
