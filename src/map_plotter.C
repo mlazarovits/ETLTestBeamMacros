@@ -46,7 +46,8 @@ void map_plotter::makeMaps(){
 		name = Form("h3_time_%i",ib);
 		v_h_time.push_back(new TH3F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY,nbinsTime,minTime,maxTime));
 		name = Form("h_map_deltat_%i",ib);
-		v_map_deltat.push_back(new TH2F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY));
+		if (ib==0) v_map_deltat.push_back(new TH2F(name,name,nbinsX,minX,maxX,nbinsY,minY,maxY));
+		else v_map_deltat.push_back(new TH2F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY));
 		name = Form("h_map_sigmat_%i",ib);
 		if (ib==0) v_map_sigmat.push_back(new TH2F(name,name,nbinsX,minX,maxX,nbinsY,minY,maxY));
 		else v_map_sigmat.push_back(new TH2F(name,name,nbinsX/rebinFactor,minX,maxX,nbinsY/rebinFactor,minY,maxY));
@@ -280,7 +281,7 @@ void map_plotter::makeMaps(){
 		FillSummaryMapCoarse(v_map_sigmat,v_map_eff[0],channel_map);
 		
 		CosmeticMap(v_map_deltat[0],"#DeltaT w.r.t. MCP [s]");
-		FillSummaryMap(v_map_deltat,channel_map);
+		FillSummaryMapCoarse(v_map_deltat,v_map_eff[0],channel_map);
 		
 		FillSummary1D(v_x_eff,channel_map,true); 
 		FillSummary1D(v_x_amp,channel_map,true);
