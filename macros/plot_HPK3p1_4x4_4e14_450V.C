@@ -9,8 +9,8 @@ int main(int argc, char **argv)
 	mp.chainPath = "root://cmseos.fnal.gov//store/group/cmstestbeam/2019_04_April_CMSTiming/KeySightScope/RecoData/TimingDAQRECO/RecoWithTracks/v1/confInfo/";
 	mp.debug=false;
 	//Define run range
-	mp.run_start = new vector<int>{13187,13245};
-	mp.run_end = new vector<int>{13204,13370};
+	mp.run_start = new vector<int>{13245,13249};
+	mp.run_end = new vector<int>{132248,13370};
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
 	//Define rotation angle and manual adjustments of x and y
