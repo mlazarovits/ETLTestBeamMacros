@@ -34,9 +34,9 @@ int main(int argc, char **argv)
 	mp.minTime=1.0e-9; mp.maxTime=1.0e-8;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=20.;
+	mp.hitThres=25.;
 	mp.photekMin=15;
-	mp.photekMax=270;
+	mp.photekMax=55;
 
 	// Define geometric boundaries for 1D "slices"
 	mp.xSliceMin={6,9,12,15};
