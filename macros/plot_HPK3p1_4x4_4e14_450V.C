@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=0.; mp.zMaxGain=140.; 
 	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.045e-9; 
-	mp.zMinDeltat=4e-9; mp.zMaxDeltat=8e-9.;	
+	mp.zMinDeltat=4e-9; mp.zMaxDeltat=-1.;	
 
 	//Do everything
     mp.makeMaps();
