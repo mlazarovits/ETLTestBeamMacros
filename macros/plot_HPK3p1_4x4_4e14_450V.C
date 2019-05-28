@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
-	mp.minTime=5.0e-9; mp.maxTime=1.0e-8;
+	mp.minTime=6.0e-9; mp.maxTime=7.0e-9;
 
 	//define threshold for LGAD hits, and range for photek
 	mp.hitThres=30.;
