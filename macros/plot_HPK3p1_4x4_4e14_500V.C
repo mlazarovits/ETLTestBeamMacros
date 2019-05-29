@@ -8,16 +8,14 @@ int main(int argc, char **argv)
 	mp.chainPath = "root://cmseos.fnal.gov//store/group/cmstestbeam/2019_04_April_CMSTiming/KeySightScope/RecoData/TimingDAQRECO/RecoWithTracks/v1/confInfo/";
 	mp.debug=false;
 	//Define run range
-	mp.run_start = new vector<int>{13371,13373};
-	mp.run_end = new vector<int>{13372,13427};
+	mp.run_start = 13371;
+	mp.run_end = 13427;
 	//Note: will try to load every run in this range, even if it doesn't exist (so, expect some harmless complaints.)
 
 	//Define rotation angle and manual adjustments of x and y
-	float dx = 12.;
-  	float dy = 0.4;
+	float dx = 12.; 
+  	float dy = 0.4; 
   	float theta = TMath::ATan(dy/dx);
-  	float costheta = TMath::Cos(theta);
-  	float sintheta = TMath::Sin(theta);
 	mp.angle = new vector<float>{-theta,-theta}; //degrees
 	mp.x_offset= new vector<float>{0.040,0.040}; //mm
 	mp.y_offset= new vector<float>{0.0,0.0}; //mm
@@ -30,16 +28,16 @@ int main(int argc, char **argv)
 	mp.minY=30; mp.maxY=38;
 
 	//Define amplitude, time binning and range, and scope saturation.
-	mp.saturation =640.;
+	mp.saturation =270.;
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
-	mp.minTime=7.2e-9; mp.maxTime=8.8e-9;
+	mp.minTime=5e-9; mp.maxTime=9e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=20.;
+	mp.hitThres=10.;
 	mp.photekMin=15;
-	mp.photekMax=270;
+	mp.photekMax=55;
 
 	// Define geometric boundaries for 1D "slices"
 	mp.xSliceMin={6,9,12,15};
