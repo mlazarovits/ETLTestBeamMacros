@@ -31,24 +31,24 @@ int main(int argc, char **argv)
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
-	mp.minTime=1.0e-9; mp.maxTime=1.0e-8;
+	mp.minTime=6.0e-9; mp.maxTime=7.0e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=20.;
-	mp.photekMin=15;
-	mp.photekMax=270;
+	mp.hitThres= 30.;
+	mp.photekMin=20;
+	mp.photekMax=60;
 
 	// Define geometric boundaries for 1D "slices"
-	mp.xSliceMin={6,9,12,15};
-	mp.xSliceMax={8.2,11.2,14.2,17.2};
-	mp.ySliceMin={32.6,33.6,34.6,35.6};
-	mp.ySliceMax={33,34,35,36};
+	mp.xSliceMin={5.1,8,11,14};
+	mp.xSliceMax={7.7,10.8,13.8,16.8};
+	mp.ySliceMin={32.2,33.1,34.1,35.1};
+	mp.ySliceMax={32.9,33.9,34.9,35.9};
 
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
-	mp.zMinGain=70.; mp.zMaxGain=110.; 
-	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.08e-9; 
-	mp.zMinDeltat=7.75e-9; mp.zMaxDeltat=-1.;	
+	mp.zMinGain=10.; mp.zMaxGain=80.; 
+	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.045e-9; 
+	mp.zMinDeltat=4e-9; mp.zMaxDeltat=-1.;	
 
 	//Do everything
     mp.makeMaps();
