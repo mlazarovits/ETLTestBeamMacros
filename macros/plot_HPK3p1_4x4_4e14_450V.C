@@ -16,7 +16,7 @@ int main(int argc, char **argv)
 	//Define rotation angle and manual adjustments of x and y
   	float theta = 1.909; //from spreadsheet
 	mp.angle = new vector<float>{-theta}; //degrees
-	mp.x_offset= new vector<float>{0.090}; //mm
+	mp.x_offset= new vector<float>{0.90}; //mm
 	mp.y_offset= new vector<float>{0.050}; //mm
 
 	//Define xy binning and ranges [mm]
