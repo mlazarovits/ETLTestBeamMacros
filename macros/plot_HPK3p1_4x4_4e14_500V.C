@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   	float theta = 1.109;//TMath::ATan(dy/dx);
 	mp.angle = new vector<float>{-theta}; //degrees
 	mp.x_offset= new vector<float>{0.040}; //mm
-	mp.y_offset= new vector<float>{0.0}; //mm
+	mp.y_offset= new vector<float>{-0.60}; //mm
 	
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=160;//30;
@@ -32,12 +32,12 @@ int main(int argc, char **argv)
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
-	mp.minTime=6e-9; mp.maxTime=7e-9;
+	mp.minTime=1e-9; mp.maxTime=10e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=15.;
-	mp.photekMin=15;
-	mp.photekMax=55;
+	mp.hitThres=10.;
+	mp.photekMin=20;
+	mp.photekMax=60;
 
 	// Define geometric boundaries for 1D "slices"
 	mp.xSliceMin={6,9,12,15};
