@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=0.; mp.zMaxGain=50.; 
-	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.50e-9; 
+	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.1e-9; 
 	mp.zMinDeltat=4e-9; mp.zMaxDeltat=-1.;
 
 
