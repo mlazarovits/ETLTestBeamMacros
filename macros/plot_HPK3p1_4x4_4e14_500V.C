@@ -17,8 +17,8 @@ int main(int argc, char **argv)
   	float dy = 0.4; 
   	float theta = 1.109;//TMath::ATan(dy/dx);
 	mp.angle = new vector<float>{-theta}; //degrees
-	mp.x_offset= new vector<float>{0.040}; //mm
-	mp.y_offset= new vector<float>{0.60}; //mm
+	mp.x_offset= new vector<float>{0.90}; //mm
+	mp.y_offset= new vector<float>{0.050}; //mm
 	
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=160;//30;
@@ -35,9 +35,9 @@ int main(int argc, char **argv)
 	mp.minTime=6e-9; mp.maxTime=7e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=15.;
-	mp.photekMin=20;
-	mp.photekMax=60;
+	mp.hitThres=30.;
+	mp.photekMin=10;
+	mp.photekMax=100;
 
 	// Define geometric boundaries for 1D "slices"
 	mp.xSliceMin={6,9,12,15};
@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
-	mp.zMinGain=0.; mp.zMaxGain=50.; 
+	mp.zMinGain=0.; mp.zMaxGain=80.; 
 	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.1e-9; 
 	mp.zMinDeltat=4e-9; mp.zMaxDeltat=-1.;
 
