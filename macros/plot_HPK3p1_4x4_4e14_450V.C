@@ -17,7 +17,7 @@ int main(int argc, char **argv)
   	float theta = 1.909; //from spreadsheet
 	mp.angle = new vector<float>{-theta}; //degrees
 	mp.x_offset= new vector<float>{0.90}; //mm
-	mp.y_offset= new vector<float>{0.050}; //mm
+	mp.y_offset= new vector<float>{0.1}; //mm
 
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=160;//30;
@@ -34,9 +34,10 @@ int main(int argc, char **argv)
 	mp.minTime=6.0e-9; mp.maxTime=7.0e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=20.;
-	mp.photekMin=10;
-	mp.photekMax=80;
+	mp.hitThres=vector<float>(mp.npad+1,15.);
+	mp.hitThres[15]=35.;
+	mp.photekMin=20;
+	mp.photekMax=60;
 
 	// Define geometric boundaries for 1D "slices"
 	mp.xSliceMin={6,9,12,15};
@@ -47,8 +48,8 @@ int main(int argc, char **argv)
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=10.; mp.zMaxGain=60.; 
-	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.09e-9; //raise z-axis
-	mp.zMinDeltat=4e-9; mp.zMaxDeltat=9e-9;	
+	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.09e-9; 
+	mp.zMinDeltat=6.3e-9; mp.zMaxDeltat=-6.8e-9;	
 
 	//Do everything
     mp.makeMaps();
