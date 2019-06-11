@@ -211,15 +211,15 @@ void map_plotter::makeMaps(){
 		//Construct maps from 3D hists
 		for(uint ie = 1; ie < v_h_eff.size(); ie++){
 			outRootFile->Cd(Form("%s:/pad%i",outFileName.Data(),ie));
-			ConvertMap(v_h_eff[ie],v_map_eff[ie],4);
-			ConvertMap(v_h_eff_timing[ie],v_map_eff_timing[ie],4);
-			ConvertMap(v_h_eff[ie],v_map_nhits[ie],2);
+			ConvertMap(v_h_eff[ie],v_map_eff[ie],4,ie);
+			ConvertMap(v_h_eff_timing[ie],v_map_eff_timing[ie],4,ie);
+			ConvertMap(v_h_eff[ie],v_map_nhits[ie],2,ie);
 
-			Convert1D(v_h_eff[ie],v_x_eff[ie],4,true);
-			Convert1D(v_h_eff[ie],v_x_nhits[ie],2,true);
+			Convert1D(v_h_eff[ie],v_x_eff[ie],4,true,ie);
+			Convert1D(v_h_eff[ie],v_x_nhits[ie],2,true,ie);
 
-			Convert1D(v_h_eff[ie],v_y_eff[ie],4,false);
-			Convert1D(v_h_eff[ie],v_y_nhits[ie],2,false);
+			Convert1D(v_h_eff[ie],v_y_eff[ie],4,false,ie);
+			Convert1D(v_h_eff[ie],v_y_nhits[ie],2,false,ie);
 			v_h_eff[ie]->Write();
 			v_h_eff_timing[ie]->Write();
 			v_map_eff[ie]->Write();
@@ -236,9 +236,9 @@ void map_plotter::makeMaps(){
 
 		for(uint ie = 1; ie < v_h_amp.size(); ie++){
 			outRootFile->Cd(Form("%s:/pad%i",outFileName.Data(),ie));
-			ConvertMap(v_h_amp[ie],v_map_amp[ie],3);
-			Convert1D(v_h_amp[ie],v_x_amp[ie],3,true);
-			Convert1D(v_h_amp[ie],v_y_amp[ie],3,false);
+			ConvertMap(v_h_amp[ie],v_map_amp[ie],3,ie);
+			Convert1D(v_h_amp[ie],v_x_amp[ie],3,true,ie);
+			Convert1D(v_h_amp[ie],v_y_amp[ie],3,false,ie);
 			v_h_amp[ie]->Write();
 			v_map_amp[ie]->Write();
 			// v_x_amp[ie]->Write();
@@ -248,17 +248,17 @@ void map_plotter::makeMaps(){
 		for(uint ie = 1; ie < v_h_time.size(); ie++){
 			outRootFile->Cd(Form("%s:/pad%i",outFileName.Data(),ie));
 			v_h_time[ie]->Write();
-			ConvertMap(v_h_time[ie],v_map_deltat[ie],0);
+			ConvertMap(v_h_time[ie],v_map_deltat[ie],0,ie);
 			v_map_deltat[ie]->Write();
-			ConvertMap(v_h_time[ie],v_map_sigmat[ie],1);
+			ConvertMap(v_h_time[ie],v_map_sigmat[ie],1,ie);
 			v_map_sigmat[ie]->Write();
-			Convert1D(v_h_time[ie],v_x_deltat[ie],0,true);
+			Convert1D(v_h_time[ie],v_x_deltat[ie],0,true,ie);
 			//v_x_deltat[ie]->Write();
-			Convert1D(v_h_time[ie],v_x_sigmat[ie],1,true);
+			Convert1D(v_h_time[ie],v_x_sigmat[ie],1,true,ie);
 
-			Convert1D(v_h_time[ie],v_y_deltat[ie],0,false);
+			Convert1D(v_h_time[ie],v_y_deltat[ie],0,false,ie);
 			//v_y_deltat[ie]->Write();
-			Convert1D(v_h_time[ie],v_y_sigmat[ie],1,false);
+			Convert1D(v_h_time[ie],v_y_sigmat[ie],1,false,ie);
 			//v_y_sigmat[ie]->Write();
 
 		}
@@ -268,10 +268,10 @@ void map_plotter::makeMaps(){
 		FillChannelMap(channel_map, v_map_eff);
 		channel_map->Write();
 
-		CosmeticMap(v_map_eff[0],Form("Hit efficiency, %.0f mV",hitThres));
+		CosmeticMap(v_map_eff[0],Form("Hit efficiency, %.0f mV",hitThres[0]));
 		FillSummaryMap(v_map_eff,channel_map);
 		
-		CosmeticMap(v_map_eff_timing[0],Form("Timestamp reco efficiency, %.0f mV",hitThres));
+		CosmeticMap(v_map_eff_timing[0],Form("Timestamp reco efficiency, %.0f mV",hitThres[0]));
 		FillSummaryMap(v_map_eff_timing,channel_map);
 		
 		CosmeticMap(v_map_amp[0],"Most probable value [mV]");
@@ -510,7 +510,7 @@ float map_plotter::GetEff(TH3F * h3, int x_lo, int x_hi, int y_lo, int y_hi, int
 	return eff;
 }
 
-void map_plotter::Convert1D(TH3F * h3, vector<TH1F *> h1, int type, bool isX){
+void map_plotter::Convert1D(TH3F * h3, vector<TH1F *> h1, int type, bool isX, int pad){
 
 	int nbins=0; int nslices=0;
 	if (isX) {nbins = h3->GetNbinsX();nslices=ySliceMin.size();}
@@ -544,7 +544,7 @@ void map_plotter::Convert1D(TH3F * h3, vector<TH1F *> h1, int type, bool isX){
 			//Landau MPV
 		if(type==3){
 			if(h->GetEntries()>20){
-				pair<float,float> mpv_and_err = GetMPV(h,minAmp,maxAmp,hitThres);
+				pair<float,float> mpv_and_err = GetMPV(h,minAmp,maxAmp,hitThres[pad]);
 				if(mpv_and_err.second/mpv_and_err.first > 0.3) continue;
 				h1[islice]->SetBinContent(ix,mpv_and_err.first);
 				h1[islice]->SetBinError(ix,mpv_and_err.second);
@@ -566,7 +566,7 @@ void map_plotter::Convert1D(TH3F * h3, vector<TH1F *> h1, int type, bool isX){
 	}
 }
 
-void map_plotter::ConvertMap(TH3F * h3, TH2F * h2, int type){
+void map_plotter::ConvertMap(TH3F * h3, TH2F * h2, int type, int pad){
 	TString hist_tag;
 	if(type==1) hist_tag = "dt";
 	else if (type==3) hist_tag = "amp";
@@ -596,7 +596,7 @@ void map_plotter::ConvertMap(TH3F * h3, TH2F * h2, int type){
 			//Landau MPV
 			if(type==3){
 				if(h->GetEntries()>20){
-					pair<float,float> mpv_and_err = GetMPV(h, minAmp,maxAmp,hitThres);
+					pair<float,float> mpv_and_err = GetMPV(h, minAmp,maxAmp,hitThres[pad]);
 					if(mpv_and_err.second/mpv_and_err.first > 0.3) continue;
 					h2->SetBinContent(ix,iy,mpv_and_err.first);
 					h2->SetBinError(ix,iy,mpv_and_err.second);
@@ -626,7 +626,7 @@ pair<int,int> map_plotter::nLGADHitsAndChannel(){
 	int ch=-1;
 	for(int j=0;j<nchan;j++){
 		if(sensors->at(j).find("Photek")==std::string::npos){ //not a photek channel
-			if(amp[j] > hitThres){
+			if(amp[j] > hitThres[pads->at(j)]){
 				nhits++;
 				ch=j;
 			}

@@ -48,8 +48,8 @@ public:
 	void FillSummaryMapCoarse(vector<TH2F*> v_map, TH2F* effmap, TH2F * channel_map);
 	void FillSummary1D(vector<vector<TH1F*> > v_map, TH2F * channel_map, bool isX);
 
-	void ConvertMap(TH3F * h3, TH2F * h2, int type);
-	void Convert1D(TH3F * h3, vector<TH1F*> h1, int type, bool isX);
+	void ConvertMap(TH3F * h3, TH2F * h2, int type, int pad);
+	void Convert1D(TH3F * h3, vector<TH1F*> h1, int type, bool isX, int pad);
 	void FillBox(TH3F * h3, TH1D * h1, int ibox);
 	void CleanMap(TH2F * map, float xmin, float xmax, float ymin, float ymax, bool scale);
 	float GetEff(TH3F * h3, int x_lo, int x_hi, int y_lo, int y_hi, int den=0);
@@ -65,7 +65,7 @@ public:
 	static const int nchan=4;
 	static const int nchan_lgad=3;
 	static const int npad=16;//3;//16;
-	float hitThres;
+	vector<float> hitThres;
 	float photekMin;
 	float photekMax;
 
