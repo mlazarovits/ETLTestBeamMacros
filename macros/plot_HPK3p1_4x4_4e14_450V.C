@@ -35,7 +35,7 @@ int main(int argc, char **argv)
 
 	//define threshold for LGAD hits, and range for photek
 	mp.hitThres=vector<float>(mp.npad+1,20.);
-	// mp.hitThres[15]=40.;
+	mp.hitThres[15]=40.;
 	mp.photekMin=20;
 	mp.photekMax=60;
 
