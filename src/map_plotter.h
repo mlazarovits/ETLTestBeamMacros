@@ -45,8 +45,11 @@ public:
 	void makeMaps();
 	void FillChannelMap(TH2F * map, vector<TH2F*> effs);
 	void FillSummaryMap(vector<TH2F*> v_map, TH2F * channel_map);
-	void FillSummaryMapCoarse(vector<TH2F*> v_map, TH2F* effmap, TH2F * channel_map);
+	void FillSummaryMapCoarse(TH2F* h_target, vector<TH2F*> v_map, TH2F* effmap, TH2F * channel_map, bool normalize=false);
 	void FillSummary1D(vector<vector<TH1F*> > v_map, TH2F * channel_map, bool isX);
+	void FillSummary1DCoarse(vector<vector<TH1F*> > v_map, vector<vector<TH1F*>> eff1d, TH2F * channel_map, bool isX);
+
+	void FillAligned(TH2F* aligned, TH2F * separate, int dx, int dy, int minx, int miny);
 
 	void ConvertMap(TH3F * h3, TH2F * h2, int type, int pad);
 	void Convert1D(TH3F * h3, vector<TH1F*> h1, int type, bool isX, int pad);
@@ -55,7 +58,7 @@ public:
 	float GetEff(TH3F * h3, int x_lo, int x_hi, int y_lo, int y_hi, int den=0);
 
 	void PrintSummaryMap(TH2F * h2,TString name,float min, float max);
-
+	void PrintSummary1D(TH1F * h,TString name);
 	TString tag;
 	TString outDir;
 	TString chainPath;
@@ -150,6 +153,8 @@ public:
 	vector<TH2F*> v_map_nhits;
 	vector<TH2F*> v_map_amp;
 	vector<TH2F*> v_map_deltat;
+	TH2F* map_deltat_normalized;
+	TH2F* map_deltat_normalized_aligned;
 	vector<TH2F*> v_map_sigmat;
 
 	TH2F * cosmetic_map;

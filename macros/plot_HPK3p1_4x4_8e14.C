@@ -33,15 +33,18 @@ int main(int argc, char **argv)
 	mp.minTime=7.2e-9; mp.maxTime=8.8e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=vector<float>(mp.npad+1,10.);
+	mp.hitThres=vector<float>(mp.npad+1,12.);
+	mp.hitThres[5]=10;
+	mp.hitThres[7]=10;
+	mp.hitThres[10]=10;
 	mp.photekMin=25;
 	mp.photekMax=60;
 
 	// Define geometric boundaries for 1D "slices"
-	mp.xSliceMin={4.8,7.9};
-	mp.xSliceMax={7.7,10.1};
-	mp.ySliceMin={33.2,33.2};
-	mp.ySliceMax={34.0,34.0};
+	mp.xSliceMin={5.2,8.2,11.2,14.2};
+	mp.xSliceMax={7.4,10.4,13.4,16.4};
+	mp.ySliceMin={31.4,32.4,33.4,34.4};
+	mp.ySliceMax={31.8,32.8,33.8,34.8};
 
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
