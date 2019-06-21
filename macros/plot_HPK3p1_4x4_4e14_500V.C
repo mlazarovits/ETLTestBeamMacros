@@ -18,7 +18,7 @@ int main(int argc, char **argv)
   	float theta = 1.109;//TMath::ATan(dy/dx);
 	mp.angle = new vector<float>{-theta}; //degrees
 	mp.x_offset= new vector<float>{0.90}; //mm
-	mp.y_offset= new vector<float>{0.050}; //mm
+	mp.y_offset= new vector<float>{0.1}; //mm
 	
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=160;//30;
