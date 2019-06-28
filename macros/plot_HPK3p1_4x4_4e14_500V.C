@@ -15,10 +15,10 @@ int main(int argc, char **argv)
 	//Define rotation angle and manual adjustments of x and y
 	float dx = 12.; 
   	float dy = 0.4; 
-  	float theta = 1.109;//TMath::ATan(dy/dx);
+  	float theta = 1.929;//TMath::ATan(dy/dx);
 	mp.angle = new vector<float>{-theta}; //degrees
 	mp.x_offset= new vector<float>{0.90}; //mm
-	mp.y_offset= new vector<float>{0.050}; //mm
+	mp.y_offset= new vector<float>{0.1}; //mm
 	
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=160;//30;
@@ -36,6 +36,7 @@ int main(int argc, char **argv)
 
 	//define threshold for LGAD hits, and range for photek
 	mp.hitThres=vector<float>(mp.npad+1,30.);
+	// mp.hitThres[15] = 80.;
 	mp.photekMin=10;
 	mp.photekMax=100;
 
