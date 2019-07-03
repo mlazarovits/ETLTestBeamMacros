@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=0.; mp.zMaxGain=80.; 
 	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.1e-9; 
-	mp.zMinDeltat=6e-9; mp.zMaxDeltat=7e-9.;
+	mp.zMinDeltat=6.0e-9; mp.zMaxDeltat=7.0e-9.;
 
 
 	//Do everything
