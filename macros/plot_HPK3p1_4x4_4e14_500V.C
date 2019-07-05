@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=80;//30;
 	mp.nbinsY=80;//10;
-	mp.rebinFactor=3; //coarser binning for maps of gain, timing (finer for efficiency)
+	mp.rebinFactor=4; //coarser binning for maps of gain, timing (finer for efficiency)
 	mp.minX=4; mp.maxX=20;
 	mp.minY=30; mp.maxY=38;
 
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=0.; mp.zMaxGain=80.; 
-	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.1e-9; 
+	mp.zMinSigmat=0.07e-9; mp.zMaxSigmat=0.1e-9; 
 	mp.zMinDeltat=6.2e-9; mp.zMaxDeltat=6.8e-9;
 
 
