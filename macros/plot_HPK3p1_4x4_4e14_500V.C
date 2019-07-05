@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=80;//30;
 	mp.nbinsY=80;//10;
-	mp.rebinFactor=4; //coarser binning for maps of gain, timing (finer for efficiency)
+	mp.rebinFactor=3; //coarser binning for maps of gain, timing (finer for efficiency)
 	mp.minX=4; mp.maxX=20;
 	mp.minY=30; mp.maxY=38;
 
