@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 	
 	//Define xy binning and ranges [mm]
 	mp.nbinsX=260;
-	mp.nbinsY=80;;
+	mp.nbinsY=80;
 	mp.rebinFactor=2; //coarser binning for maps of gain, timing (finer for efficiency)
 	mp.minX=4; mp.maxX=30;
 	mp.minY=30; mp.maxY=38;
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 	mp.minTime=7.2e-9; mp.maxTime=8.8e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=10.;
+	mp.hitThres=vector<float>(mp.npad+1,10.);
 	mp.photekMin=25;
 	mp.photekMax=55;
 

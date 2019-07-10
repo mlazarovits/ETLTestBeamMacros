@@ -21,9 +21,9 @@ int main(int argc, char **argv)
 	mp.y_offset= new vector<float>{0.1}; //mm
 	
 	//Define xy binning and ranges [mm]
-	mp.nbinsX=160;//30;
+	mp.nbinsX=80;//30;
 	mp.nbinsY=80;//10;
-	mp.rebinFactor=2; //coarser binning for maps of gain, timing (finer for efficiency)
+	mp.rebinFactor=3; //coarser binning for maps of gain, timing (finer for efficiency)
 	mp.minX=4; mp.maxX=20;
 	mp.minY=30; mp.maxY=38;
 
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
 	//define threshold for LGAD hits, and range for photek
 	mp.hitThres=vector<float>(mp.npad+1,30.);
-	// mp.hitThres[15] = 80.;
+	mp.hitThres[15] = 80.;
 	mp.photekMin=10;
 	mp.photekMax=100;
 
@@ -49,8 +49,8 @@ int main(int argc, char **argv)
 	//Specify range for colz maps. -1 is ignored.
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=0.; mp.zMaxGain=80.; 
-	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.1e-9; 
-	mp.zMinDeltat=4e-9; mp.zMaxDeltat=-1.;
+	mp.zMinSigmat=0.07e-9; mp.zMaxSigmat=0.1e-9; 
+	mp.zMinDeltat=6.2e-9; mp.zMaxDeltat=6.8e-9;
 
 
 	//Do everything

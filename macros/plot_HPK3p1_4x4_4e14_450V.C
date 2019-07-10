@@ -20,7 +20,7 @@ int main(int argc, char **argv)
 	mp.y_offset= new vector<float>{0.1}; //mm
 
 	//Define xy binning and ranges [mm]
-	mp.nbinsX=160;//30;
+	mp.nbinsX=80;//30;
 	mp.nbinsY=80;//10;
 	mp.rebinFactor=2; //coarser binning for maps of gain, timing (finer for efficiency)
 	mp.minX=4; mp.maxX=20;
@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	mp.zMinEff=-1.; mp.zMaxEff=-1.; 
 	mp.zMinGain=10.; mp.zMaxGain=60.; 
 	mp.zMinSigmat=0.01e-9; mp.zMaxSigmat=0.09e-9; 
-	mp.zMinDeltat=6.3e-9; mp.zMaxDeltat=-6.8e-9;	
+	mp.zMinDeltat=6.5e-9; mp.zMaxDeltat=6.7e-9;	
 
 	//Do everything
     mp.makeMaps();
