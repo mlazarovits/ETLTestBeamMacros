@@ -67,10 +67,9 @@ pair<float,float> GetSigmaT(TH1F * h, float minTime, float maxTime){
 
 pair<float,float> GetMPV(TH1F * h, float minAmp, float maxAmp, float hitThres){
 
-
     double fr[2]={minAmp,maxAmp};
-    double st[4]={0.2*hitThres,2.2*hitThres,5000,hitThres/3.};
-    double pllo[4]={0.5,1.5*hitThres,1.0,0.4};
+    double st[4]={0.2*hitThres,2.5*hitThres,5000,hitThres/3.};
+    double pllo[4]={0.5,1.0*hitThres,1.0,0.4};
     double plhi[4]={2*hitThres,4.*hitThres,100000.0,hitThres/2.5};
     double fp[4],fpe[4];
     double CHI2;

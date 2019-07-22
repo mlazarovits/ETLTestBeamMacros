@@ -52,14 +52,13 @@ int main(int argc, char **argv)
   mp.hitThres[15]=10.;
   mp.hitThres[16]=11.;
 
-  mp.photekMin=25;
-  mp.photekMax=90;
-  
-  // Define geometric boundaries for 1D "slices"
-  mp.xSliceMin={5.2,8.2,11.2,14.2};
-  mp.xSliceMax={7.4,10.4,13.4,16.4};
-  mp.ySliceMin={31.4,32.4,33.4,34.4};
-  mp.ySliceMax={31.8,32.8,33.8,34.8};
+
+	// Define geometric boundaries for 1D "slices"
+	mp.xSliceMin={5.2,8.2,11.2,14.2};
+	mp.xSliceMax={7.4,10.4,13.4,16.4};
+	mp.ySliceMin={31.4,32.4,33.4,34.4};
+	mp.ySliceMax={31.8,32.8,33.8,34.8};
+
 
   //Specify range for colz maps. -1 is ignored.
   mp.zMinEff=-1.; mp.zMaxEff=-1.; 

@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	//Define rotation angle and manual adjustments of x and y
 	float dx = 12.;
   	float dy = 0.4;
-  	float theta = TMath::ATan(dy/dx);
+  	float theta = 1.909; //TMath::ATan(dy/dx);
   	float costheta = TMath::Cos(theta);
   	float sintheta = TMath::Sin(theta);
 	mp.angle = new vector<float>{-theta,-theta}; //degrees
@@ -34,10 +34,10 @@ int main(int argc, char **argv)
 	mp.nbinsAmp=60;
 	mp.minAmp=0; mp.maxAmp=mp.saturation;
 	mp.nbinsTime=60;
-	mp.minTime=1.0e-11; mp.maxTime=8.0e-11;
+	mp.minTime=1.0e-9; mp.maxTime=9.0e-9;
 
 	//define threshold for LGAD hits, and range for photek
-	mp.hitThres=20.;
+	mp.hitThres=vector<float>(mp.npad+1,10.);
 	mp.photekMin=15;
 	mp.photekMax=270;
 
