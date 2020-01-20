@@ -1,4 +1,4 @@
-#include "map_plotter.C"
+#include "macros/map_plotter.C"
 #include "OptimizerClass.hh"
 
 # ifndef __CINT__
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 
 	OptimizerClass Optimizer;
 	Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
-	
+
 	// nBinsX = Optimizer.GetnBinsX();
 	// nBinsY = Optimizer.GetnBinsY();
 
