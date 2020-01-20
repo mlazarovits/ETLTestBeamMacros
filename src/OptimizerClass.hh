@@ -5,7 +5,7 @@
 #include "calcDropoffs.C"
 #include "map_plotter.C"
 
-class OptimizerClass(){
+class OptimizerClass{
 	public:
 		OptimizerClass();
 		virtual ~OptimizerClass(){};

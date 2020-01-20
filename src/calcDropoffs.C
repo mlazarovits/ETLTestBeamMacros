@@ -3,7 +3,7 @@ using namespace std;
 #include "TGraph.h"
 
 typedef pair<Double_t,Double_t> pairs;
-set<pairs> calcDropoffs(TH1* hist){
+std::set<pairs> calcDropoffs(TH1* hist){
 	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
 	// TString histname = "h_x_eff_0_2";
 
