@@ -5,6 +5,8 @@
 #include "calcDropoffs.C"
 #include "map_plotter.C"
 
+
+typedef pair<Double_t,Double_t> pairs;
 class OptimizerClass{
 	public:
 		OptimizerClass();
@@ -18,19 +20,20 @@ class OptimizerClass{
 		Int_t nBinsY;
 		Int_t nBinsX;
 
-		void Optimizerplotter();
+		void Optimizerplotter(TH1* hist);
 
 		Double_t** createScoreMatrixX(TFile* file);
 		Double_t** createScoreMatrixY(TFile* file);
-		Double_t mat_scores[4][4];
+		// Double_t mat_scores[4][4];
 
 	private:
+		// Int_t nPts;
+
 		std::set<pair> scores; //set of dropoff score and location (middle of pad)
 
-		Double_t x[nPts];
-		Double_t y[nPts];
-		Double_t deriv_x[nPts-1];
-		Int_t nPts;
+		// Double_t x[nPts];
+		// Double_t y[nPts];
+		// Double_t deriv_x[nPts-1];
 }
 
 #endif
@@ -44,11 +47,12 @@ inline Int_t OptimizerClass::GetnBinsX(){
 }
 
 inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
+	Double_t mat_scores[4][4];
 	//calculate initial scores in X 
 	for(int i = 0; i < 4; i++){
 		TString histname = Form("h_x_eff_0_%i",i);
 		TH1F* hist = (TH1F*)file->Get(histname);
-		scores = Optimizer.calcDropoffs(hist);
+		scores = calcDropoffs(hist);
 		for(int sc = 0; sc < 4; sc++){
 			std::set<std::pairs>::iterator it = std::next(scores.begin(),sc);
 			mat_scores[i][sc] = *it;
@@ -58,6 +62,7 @@ inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
 }
 
 inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
+	Double_t mat_scores[4][4];
 	//calculate initial scores in Y
 	for(int i = 0; i < 4; i++){
 		TString histname = Form("h_y_eff_0_%i",i);
