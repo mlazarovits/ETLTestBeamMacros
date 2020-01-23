@@ -2,6 +2,7 @@
 #include "OptimizerClass.hh"
 
 # ifndef __CINT__
+typedef pair<Double_t,Double_t> pairs;
 int main(int argc, char **argv)
 {
 	Double_t minX = 4.;

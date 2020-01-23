@@ -27,13 +27,13 @@ class OptimizerClass{
 		// Double_t mat_scores[4][4];
 
 	private:
-		// Int_t nPts;
+		Int_t nPts;
+		Double_t x[nPts];
+		Double_t y[nPts];
+		Double_t deriv_x[nPts-1];
+		std::set<Double_t, Double_t> scores; //set of dropoff score and location (middle of pad)
 
-		std::set<pair> scores; //set of dropoff score and location (middle of pad)
-
-		// Double_t x[nPts];
-		// Double_t y[nPts];
-		// Double_t deriv_x[nPts-1];
+		
 }
 
 #endif
