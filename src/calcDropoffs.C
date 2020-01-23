@@ -4,7 +4,7 @@ using namespace std;
 #include <vector>
 
 // typedef pair<Double_t,Double_t> pairs;
-std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
+set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
 	// TString histname = "h_x_eff_0_2";
 
