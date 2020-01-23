@@ -8,8 +8,7 @@
 #include <algorithm>
 
 
-// typedef pair<Double_t,Double_t> pairs;
-std::set<std::pair<Double_t,Double_t>> calcDropoffs(TH1* hist){
+std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* hist){
 	
 	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
 	// TString histname = "h_x_eff_0_2";
