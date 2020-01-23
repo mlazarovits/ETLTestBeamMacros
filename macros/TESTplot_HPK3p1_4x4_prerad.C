@@ -2,15 +2,15 @@
 #include "OptimizerClass.hh"
 
 # ifndef __CINT__
-typedef pair<Double_t,Double_t> pairs;
+// typedef pair<Double_t,Double_t> pairs;
 int main(int argc, char **argv)
 {
 	Double_t minX = 4.;
 	Double_t maxX = 20.;
 	Double_t minY = 30.;
 	Double_t maxY = 38.;
-	set<pair> scores; //set of dropoff score and location (middle of pad)
-	set<pair> tmpscores;
+	set<Double_t, Double_t> scores; //set of dropoff score and location (middle of pad)
+	set<Double_t, Double_t> tmpscores;
 	Double_t avgscores; //average of scores per row/column
 
 	Int_t nBinsX;
