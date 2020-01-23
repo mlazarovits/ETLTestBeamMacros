@@ -4,7 +4,6 @@ using namespace std;
 
 # ifndef __CINT__
 
-// typedef pair<Double_t,Double_t> pairs;
 int main(int argc, char **argv)
 {
 	Double_t minX = 4.;
@@ -13,6 +12,7 @@ int main(int argc, char **argv)
 	Double_t maxY = 38.;
 	set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
 	set<pair<Double_t, Double_t>> tmpscores;
+	Double_t** scoresX;
 	Double_t avgscores; //average of scores per row/column
 
 	Int_t nBinsX;
@@ -25,6 +25,8 @@ int main(int argc, char **argv)
 
 	OptimizerClass Optimizer;
 	Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
+	TFile* file = TFile::Open(g_pathname+og_histname);
+	scoresX = Optimizer.createScoreMatrixX(file);
 
 	// nBinsX = Optimizer.GetnBinsX();
 	// nBinsY = Optimizer.GetnBinsY();
@@ -79,13 +81,13 @@ int main(int argc, char **argv)
 
 
     //steps - how to work with ETLTestBeamMacros??
-	//1. create histogram from ETLTestBeamMacros macro (start w plot_HPK3p1_4x4_prerad.C)
-	//2. create array of 1D histogram names
-	//3. create instance of OptimizerClass -> use calcDropoffs on each 1D histogram (2D for loop - start with 1 direction)
-	//4. shift histogram +0.5 mm/bin until edge (recalcuate score at each shift, keep if better than last shift)
-	//5. repeat step 4 with -0.5 mm/bin
-	//6. repeat for each direction
+	//2. create instance of OptimizerClass -> use calcDropoffs on each 1D histogram (2D for loop - start with 1 direction)
+	//3. shift histogram +0.5 mm/bin until edge (recalcuate score at each shift, keep if better than last shift)
+	//4. repeat step 4 with -0.5 mm/bin
+	//5. repeat for each direction
     
+    	//1. create histogram from ETLTestBeamMacros macro (start w plot_HPK3p1_4x4_prerad.C)
+
 
 }
 # endif
