@@ -64,9 +64,11 @@ inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
 }
 
 inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
-	Double_t mat_scores[4][4];
+	Double_t** mat_scores = 0;
+	mat_scores = new Double_t*[4];
 	//calculate initial scores in Y
 	for(int i = 0; i < 4; i++){
+		mat_scores[i] = new Double_t[4];
 		TString histname = Form("h_y_eff_0_%i",i);
 		TH1F* hist = (TH1F*)file->Get(histname);
 		scores = calcDropoffs(hist);
