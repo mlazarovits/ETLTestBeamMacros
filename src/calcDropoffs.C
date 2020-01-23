@@ -1,10 +1,9 @@
-using namespace std;
+// using namespace std;
 #include "TAttMarker.h"
 #include "TGraph.h"
-#include <vector>
 
 // typedef pair<Double_t,Double_t> pairs;
-set<Double_t,Double_t> calcDropoffs(TH1* hist){
+std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
 	// TString histname = "h_x_eff_0_2";
 

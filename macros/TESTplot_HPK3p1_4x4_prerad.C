@@ -1,5 +1,6 @@
 // #include "map_plotter.C"
 #include "OptimizerClass.hh"
+using namespace std;
 
 # ifndef __CINT__
 // typedef pair<Double_t,Double_t> pairs;
