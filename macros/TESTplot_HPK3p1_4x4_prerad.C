@@ -24,8 +24,8 @@ int main(int argc, char **argv)
 
 
 	OptimizerClass Optimizer;
-	Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
-	TFile* file = TFile::Open(g_pathname+og_histname);
+	// Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
+	TFile* file = TFile::Open(g_pathname+og_histname+".root");
 	scoresX = Optimizer.createScoreMatrixX(file);
 
 	// nBinsX = Optimizer.GetnBinsX();
