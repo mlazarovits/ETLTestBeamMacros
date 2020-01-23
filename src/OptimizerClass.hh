@@ -21,7 +21,7 @@ class OptimizerClass{
 		Int_t nBinsY;
 		Int_t nBinsX;
 
-		void Optimizerplotter(TH1* hist, Double_t* x, Double_t* deriv_x);
+		// void Optimizerplotter(TH1* hist, Double_t* x, Double_t* deriv_x);
 
 		Double_t** createScoreMatrixX(TFile* file);
 		Double_t** createScoreMatrixY(TFile* file);
@@ -83,22 +83,22 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 }
 
 
-inline void OptimizerClass::Optimizerplotter(TH1* hist,Double_t* x, Double_t* deriv_x){
-	TGraph* graph = new TGraph(hist);
-	graph->GetXaxis()->SetTitle("x distance (mm)");
-	graph->GetYaxis()->SetTitle("efficiency");
-	graph->SetMarkerStyle(kStar);
-	graph->Draw();
+// inline void OptimizerClass::Optimizerplotter(TH1* hist,Double_t* x, Double_t* deriv_x){
+// 	TGraph* graph = new TGraph(hist);
+// 	graph->GetXaxis()->SetTitle("x distance (mm)");
+// 	graph->GetYaxis()->SetTitle("efficiency");
+// 	graph->SetMarkerStyle(kStar);
+// 	graph->Draw();
 
-	TGraph* g_deriv = new TGraph(nPts,x,deriv_x);
-	g_deriv->SetTitle("Squared Derivative of 1D profile");
-	g_deriv->GetXaxis()->SetTitle("x distance (mm)");
-	g_deriv->GetYaxis()->SetTitle("Derivative squared");
-	g_deriv->SetMarkerStyle(kStar);
-	TCanvas* cv = new TCanvas();
-	cv->cd();
-	g_deriv->Draw();
-}
+// 	TGraph* g_deriv = new TGraph(nPts,x,deriv_x);
+// 	g_deriv->SetTitle("Squared Derivative of 1D profile");
+// 	g_deriv->GetXaxis()->SetTitle("x distance (mm)");
+// 	g_deriv->GetYaxis()->SetTitle("Derivative squared");
+// 	g_deriv->SetMarkerStyle(kStar);
+// 	TCanvas* cv = new TCanvas();
+// 	cv->cd();
+// 	g_deriv->Draw();
+// }
 
 inline void OptimizerClass::createHistograms(TString tag, Double_t Xmin, Double_t Xmax, Double_t Ymin, Double_t Ymax){
 	map_plotter mp;

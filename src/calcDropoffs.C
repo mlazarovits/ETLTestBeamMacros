@@ -3,6 +3,8 @@
 #include "TGraph.h"
 #include "TAxis.h"
 #include "TCanvas.h"
+#include "TH1.h"
+#include <utility>
 
 
 // typedef pair<Double_t,Double_t> pairs;
