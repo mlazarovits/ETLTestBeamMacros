@@ -7,7 +7,7 @@
 
 
 
-typedef pair<Double_t,Double_t> pairs;
+// typedef pair<Double_t,Double_t> pairs;
 class OptimizerClass{
 	public:
 		OptimizerClass();
@@ -28,7 +28,7 @@ class OptimizerClass{
 		// Double_t mat_scores[4][4];
 
 	private:
-		std::set<pairs> dropoffscores;
+		// std::set<pairs> dropoffscores;
 		Int_t nPts;
 		// Double_t x[nPts];
 		// Double_t y[nPts];

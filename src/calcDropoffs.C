@@ -3,8 +3,7 @@
 #include "TGraph.h"
 #include "TAxis.h"
 #include "TCanvas.h"
-#include "TH1.h"
-#include "OptimizerClass.hh"
+
 
 // typedef pair<Double_t,Double_t> pairs;
 std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
@@ -88,11 +87,11 @@ std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	Int_t mids[4] = {mid1, mid2, mid3, mid4};
 	Double_t spikes[4] = {spike1+spike2,spike2+spike3, spike3+spike4, spike4+spike5};
 	
-	// std::set<pairs> dropoffscores;
+	std::set<pair<Double_t,Double_t>> dropoffscores;
 
 	for(int i = 0; i < 4; i++){
 		Int_t index = mids[i];
-		pairs thispair = std::make_pair(x[index],spikes[i]);
+		pair<Double_t,Double_t> thispair = std::make_pair(x[index],spikes[i]);
 		dropoffscores.insert(thispair);
 	}
 
