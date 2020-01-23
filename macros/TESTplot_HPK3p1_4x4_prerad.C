@@ -18,7 +18,7 @@ int main(int argc, char **argv)
 	Int_t nBinsX;
 	Int_t nBinsY;
 
-	TString g_pathname = "~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/";
+	TString g_pathname = "/uscms/homes/m/mlazarov/work/CMSSW_9_2_6/src/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/";
 	TString og_histname = "HPK3p1_4x4_prerad";
 	TString shifted_histname = "HPK3p1_4x4_prerad_shift";
 
