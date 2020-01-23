@@ -4,6 +4,7 @@
 #include "TAxis.h"
 #include "TCanvas.h"
 #include "TH1.h"
+#include "OptimizerClass.hh"
 
 // typedef pair<Double_t,Double_t> pairs;
 std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
