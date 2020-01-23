@@ -22,7 +22,7 @@ class OptimizerClass{
 
 		void Optimizerplotter(TH1* hist, Double_t* x, Double_t* deriv_x);
 
-		Double_t* createScoreMatrixX(TFile* file);
+		Double_t** createScoreMatrixX(TFile* file);
 		Double_t** createScoreMatrixY(TFile* file);
 		// Double_t mat_scores[4][4];
 
@@ -46,10 +46,12 @@ inline Int_t OptimizerClass::GetnBinsX(){
 	return nBinsX;
 }
 
-inline Double_t* OptimizerClass::createScoreMatrixX(TFile* file){
-	Double_t mat_scores[4][4];
+inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
+	Double_t** mat_scores = 0;
+	mat_scores = new Double_t*[4];
 	//calculate initial scores in X 
 	for(int i = 0; i < 4; i++){
+		mat_scores[i] = new Double_t[4];
 		TString histname = Form("h_x_eff_0_%i",i);
 		TH1F* hist = (TH1F*)file->Get(histname);
 		scores = calcDropoffs(hist);
