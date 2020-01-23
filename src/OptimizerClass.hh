@@ -28,6 +28,7 @@ class OptimizerClass{
 		// Double_t mat_scores[4][4];
 
 	private:
+		std::set<pairs> dropoffscores;
 		Int_t nPts;
 		// Double_t x[nPts];
 		// Double_t y[nPts];
