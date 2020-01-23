@@ -20,7 +20,7 @@ class OptimizerClass{
 		Int_t nBinsY;
 		Int_t nBinsX;
 
-		void Optimizerplotter(TH1* hist);
+		void Optimizerplotter(TH1* hist, Double_t* x, Double_t* deriv_x);
 
 		Double_t** createScoreMatrixX(TFile* file);
 		Double_t** createScoreMatrixY(TFile* file);
@@ -34,7 +34,7 @@ class OptimizerClass{
 		std::set<Double_t, Double_t> scores; //set of dropoff score and location (middle of pad)
 
 		
-}
+};
 
 #endif
 
@@ -54,7 +54,7 @@ inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
 		TH1F* hist = (TH1F*)file->Get(histname);
 		scores = calcDropoffs(hist);
 		for(int sc = 0; sc < 4; sc++){
-			std::set<std::Double_t, Double_t>::iterator it = std::next(scores.begin(),sc);
+			std::set<Double_t, Double_t>::iterator it = std::next(scores.begin(),sc);
 			mat_scores[i][sc] = *it;
 		}		
 	}
@@ -69,7 +69,7 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 		TH1F* hist = (TH1F*)file->Get(histname);
 		scores = Optimizer.calcDropoffs(hist);
 		for(int sc = 0; sc < 4; sc++){
-			std::set<std::Double_t, Double_t>::iterator it = std::next(scores.begin(),sc);
+			std::set<Double_t, Double_t>::iterator it = std::next(scores.begin(),sc);
 			mat_scores[sc][i] = mat_scores[sc][i] + *it;
 		}		
 	}
@@ -77,7 +77,7 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 }
 
 
-inline void OptimizerClass::Optimizerplotter(TH1* hist,x,deriv_x){
+inline void OptimizerClass::Optimizerplotter(TH1* hist,Double_t* x, Double_t* deriv_x){
 	TGraph* graph = new TGraph(hist);
 	graph->GetXaxis()->SetTitle("x distance (mm)");
 	graph->GetYaxis()->SetTitle("efficiency");
