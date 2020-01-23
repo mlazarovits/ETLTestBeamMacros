@@ -59,7 +59,7 @@ inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
 		scores = calcDropoffs(hist);
 		for(int sc = 0; sc < 4; sc++){
 			std::set<Double_t, Double_t>::iterator it = std::next(scores.begin(),sc);
-			mat_scores[i][sc] = *it;
+			mat_scores[i][sc] = std::get<1>(*it);
 		}		
 	}
 	return mat_scores;
@@ -75,8 +75,8 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 		TH1F* hist = (TH1F*)file->Get(histname);
 		scores = calcDropoffs(hist);
 		for(int sc = 0; sc < 4; sc++){
-			std::set<Double_t, Double_t>::iterator it = std::next(scores.begin(),sc);
-			mat_scores[sc][i] = mat_scores[sc][i] + *it;
+			std::set<std::pair<Double_t,Double_t>>::iterator it = std::next(scores.begin(),sc);
+			mat_scores[sc][i] = std::get<1>(*it);
 		}		
 	}
 	return mat_scores;
