@@ -1,8 +1,10 @@
 // using namespace std;
 #include "TAttMarker.h"
 #include "TGraph.h"
+#include "TAxis.h"
+#include "TCanvas.h"
 
-// typedef pair<Double_t,Double_t> pairs;
+typedef pair<Double_t,Double_t> pairs;
 std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
 	// TString histname = "h_x_eff_0_2";
@@ -69,11 +71,11 @@ std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	Double_t spike4 = *max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5);
 	Double_t spike5 = *max_element(deriv_x+4*nPts/5,deriv_x+nPts);
 
-	Int_t pos1 = distance(deriv_x, max_element(deriv_x,deriv_x+nPts/5));
-	Int_t pos2 = distance(deriv_x, max_element(deriv_x+nPts/5,deriv_x+2*nPts/5));
-	Int_t pos3 = distance(deriv_x, max_element(deriv_x+2*nPts/5,deriv_x+3*nPts/5));
-	Int_t pos4 = distance(deriv_x, max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5));
-	Int_t pos5 = distance(deriv_x, max_element(deriv_x+4*nPts/5,deriv_x+5*nPts/5));
+	Int_t pos1 = std::distance(deriv_x, max_element(deriv_x,deriv_x+nPts/5));
+	Int_t pos2 = std::distance(deriv_x, max_element(deriv_x+nPts/5,deriv_x+2*nPts/5));
+	Int_t pos3 = std::distance(deriv_x, max_element(deriv_x+2*nPts/5,deriv_x+3*nPts/5));
+	Int_t pos4 = std::distance(deriv_x, max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5));
+	Int_t pos5 = std::distance(deriv_x, max_element(deriv_x+4*nPts/5,deriv_x+5*nPts/5));
 	
 	Int_t mid1 = (pos1+pos2)/2;
 	Int_t mid2 = (pos2+pos3)/2;
