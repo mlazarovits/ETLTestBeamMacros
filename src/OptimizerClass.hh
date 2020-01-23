@@ -12,7 +12,7 @@ class OptimizerClass{
 	public:
 		OptimizerClass();
 		virtual ~OptimizerClass(){};
-		std::set<Double_t, Double_t> calcDropoffs(TH1* hist);
+		std::set<std::pair<Double_t,Double_t>> calcDropoffs(TH1* hist);
 		void createHistograms(TString tag, Double_t Xmin, Double_t Xmax, Double_t Ymin, Double_t Ymax);
 
 		Int_t GetnBinsY();
