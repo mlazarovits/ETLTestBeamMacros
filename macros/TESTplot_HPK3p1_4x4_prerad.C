@@ -11,8 +11,8 @@ int main(int argc, char **argv)
 	Double_t maxX = 20.;
 	Double_t minY = 30.;
 	Double_t maxY = 38.;
-	set<Double_t, Double_t> scores; //set of dropoff score and location (middle of pad)
-	set<Double_t, Double_t> tmpscores;
+	set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
+	set<pair<Double_t, Double_t>> tmpscores;
 	Double_t avgscores; //average of scores per row/column
 
 	Int_t nBinsX;

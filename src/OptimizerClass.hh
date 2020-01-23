@@ -10,7 +10,7 @@
 // typedef pair<Double_t,Double_t> pairs;
 class OptimizerClass{
 	public:
-		OptimizerClass();
+		OptimizerClass(){};
 		virtual ~OptimizerClass(){};
 		std::set<std::pair<Double_t,Double_t>> calcDropoffs(TH1* hist);
 		void createHistograms(TString tag, Double_t Xmin, Double_t Xmax, Double_t Ymin, Double_t Ymax);
