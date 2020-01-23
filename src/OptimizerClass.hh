@@ -7,7 +7,7 @@
 
 
 
-// typedef pair<Double_t,Double_t> pairs;
+typedef pair<Double_t,Double_t> pairs;
 class OptimizerClass{
 	public:
 		OptimizerClass();

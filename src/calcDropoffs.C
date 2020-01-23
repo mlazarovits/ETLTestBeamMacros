@@ -5,9 +5,9 @@
 #include "TCanvas.h"
 #include "TH1.h"
 
-
+// typedef pair<Double_t,Double_t> pairs;
 std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
-	typedef pair<Double_t,Double_t> pairs;
+	
 	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
 	// TString histname = "h_x_eff_0_2";
 
@@ -67,11 +67,11 @@ std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	// cout << "spike 4: " << *max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5) << endl;
 	// cout << "spike 5: " << *max_element(deriv_x+4*nPts/5,deriv_x+nPts) << endl;
 	
-	Double_t spike1 = *std::max_element(deriv_x,deriv_x+nPts/5);
-	Double_t spike2 = *std::max_element(deriv_x+nPts/5,deriv_x+2*nPts/5);
-	Double_t spike3 = *std::max_element(deriv_x+2*nPts/5,deriv_x+3*nPts/5);
-	Double_t spike4 = *std::max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5);
-	Double_t spike5 = *std::max_element(deriv_x+4*nPts/5,deriv_x+nPts);
+	Double_t spike1 = *max_element(deriv_x,deriv_x+nPts/5);
+	Double_t spike2 = *max_element(deriv_x+nPts/5,deriv_x+2*nPts/5);
+	Double_t spike3 = *max_element(deriv_x+2*nPts/5,deriv_x+3*nPts/5);
+	Double_t spike4 = *max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5);
+	Double_t spike5 = *max_element(deriv_x+4*nPts/5,deriv_x+nPts);
 
 	Int_t pos1 = std::distance(deriv_x, max_element(deriv_x,deriv_x+nPts/5));
 	Int_t pos2 = std::distance(deriv_x, max_element(deriv_x+nPts/5,deriv_x+2*nPts/5));
@@ -87,11 +87,11 @@ std::set<Double_t,Double_t> calcDropoffs(TH1* hist){
 	Int_t mids[4] = {mid1, mid2, mid3, mid4};
 	Double_t spikes[4] = {spike1+spike2,spike2+spike3, spike3+spike4, spike4+spike5};
 	
-	set<pairs> dropoffscores;
+	std::set<pairs> dropoffscores;
 
 	for(int i = 0; i < 4; i++){
 		Int_t index = mids[i];
-		pair<Double_t,Double_t> thispair = make_pair(x[index],spikes[i]);
+		pairs thispair = std::make_pair(x[index],spikes[i]);
 		dropoffscores.insert(thispair);
 	}
 
