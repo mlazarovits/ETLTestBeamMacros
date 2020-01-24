@@ -27,16 +27,18 @@ int main(int argc, char **argv)
 	OptimizerClass Optimizer;
 	// Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
-	scoresX = Optimizer.createScoreMatrixX(file);
-	scoresY = Optimizer.createScoreMatrixY(file);
 	cout << "point a" << endl;
+	scoresX = Optimizer.createScoreMatrixX(file);
+	cout << "point b" << endl;
+	scoresY = Optimizer.createScoreMatrixY(file);
+	cout << "point c" << endl;
 	for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
 			cout << "scoresX: " << scoresX[i][j] << "index " << i << ", " << j << endl;
 			cout << "scoresY: " << scoresY[i][j] << "index " << i << ", " << j << endl;
 		}
 	}
-	cout << "point b" << endl;
+	cout << "point d" << endl;
 
 	// nBinsX = Optimizer.GetnBinsX();
 	// nBinsY = Optimizer.GetnBinsY();
