@@ -83,6 +83,7 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 			cout << "sc: " << sc << endl;
 			std::set<std::pair<Double_t,Double_t>>::iterator it = std::next(scoresY.begin(),sc);
 			cout << "here" << endl;
+			cout << "score: " << std::get<1>(*it) << endl;
 			mat_scoresY[sc][i] = std::get<1>(*it);
 			cout << "point 4" << endl;
 		}
