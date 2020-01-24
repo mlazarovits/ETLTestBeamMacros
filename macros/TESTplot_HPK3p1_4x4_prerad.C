@@ -27,6 +27,9 @@ int main(int argc, char **argv)
 	// Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
 	scoresX = Optimizer.createScoreMatrixX(file);
+	scoresY = Optimizer.createScoreMatrixY(file);
+	cout << "size scoresX: " << scoresX.max_size() << endl;
+	cout << "size scoresY: " << scoresY.max_size() << endl;
 
 	// nBinsX = Optimizer.GetnBinsX();
 	// nBinsY = Optimizer.GetnBinsY();
