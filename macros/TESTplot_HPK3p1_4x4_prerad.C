@@ -13,8 +13,9 @@ int main(int argc, char **argv)
 	set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
 	set<pair<Double_t, Double_t>> tmpscores;
 	Double_t** scoresX;
-	Double_t** scoresY;
+	Double_t** scoresY_T;
 	Double_t avgscores; //average of scores per row/column
+	scoresY[4][4];
 
 	Int_t nBinsX;
 	Int_t nBinsY;
@@ -27,30 +28,16 @@ int main(int argc, char **argv)
 	OptimizerClass Optimizer;
 	// Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
-	cout << "point a" << endl;
 	scoresX = Optimizer.createScoreMatrixX(file);
-	cout << "point b" << endl;
-	scoresY = Optimizer.createScoreMatrixY(file);
-	cout << "point c" << endl;
+	scoresY_T = Optimizer.createScoreMatrixY(file);
 	for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
-			cout << "scoresX: " << scoresX[i][j] << "index " << i << ", " << j << endl;
-			cout << "scoresY: " << scoresY[i][j] << "index " << i << ", " << j << endl;
+			scoresY[i][j] = scoresY_T[j][i]
+			cout << "scoresX: " << scoresX[i][j] << " index " << i << ", " << j << endl;
+			cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
 		}
 	}
-	cout << "point d" << endl;
 
-	// nBinsX = Optimizer.GetnBinsX();
-	// nBinsY = Optimizer.GetnBinsY();
-
-	// Double_t og_matscoresX[4][4];
-	// Double_t shift_matscoresX[4][4];
-
-	// TFile* og_file = TFile::Open(g_pathname+og_histname+".root");
-	// TFile* shift_file = TFile::Open(g_pathname+shifted_histname_".root");
-
-	// //calculate initial scores in X 
-	// og_matscoresX = Optimizer.createScoreMatrixX(og_file);
 	
 	// //shift histogram
 	// Optimizer.createHistograms(shifted_histname,minX+0.05,maxX+0.05,minY,maxY);
@@ -74,31 +61,18 @@ int main(int argc, char **argv)
 
 
 
-
-	// //calculate initial scores in Y
-	// for(int i = 0; i < 4; i++){
-	// 	TString histname = Form("h_y_eff_0_%i",i);
-	// 	TH1F* hist = (TH1F*)file->Get(histname);
-	// 	scores = Optimizer.calcDropoffs(hist);
-	// 	for(int sc = 0; sc < 4; sc++){
-	// 		single_score = std::set<std::pairs>::iterator it = std::next(scores.begin(),sc);
-	// 		mat_scores[sc][i] = mat_scores[sc][i] + *it;
-	// 	}		
-	// }
-
-
 	
 
 	
 
 
     //steps - how to work with ETLTestBeamMacros??
-	//2. create instance of OptimizerClass -> use calcDropoffs on each 1D histogram (2D for loop - start with 1 direction)
 	//3. shift histogram +0.5 mm/bin until edge (recalcuate score at each shift, keep if better than last shift)
 	//4. repeat step 4 with -0.5 mm/bin
 	//5. repeat for each direction
     
     	//1. create histogram from ETLTestBeamMacros macro (start w plot_HPK3p1_4x4_prerad.C)
+		//2. create instance of OptimizerClass -> use calcDropoffs on each 1D histogram (2D for loop - start with 1 direction)
 
 
 }
