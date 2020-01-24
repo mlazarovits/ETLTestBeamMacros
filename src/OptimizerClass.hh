@@ -32,7 +32,7 @@ class OptimizerClass{
 		// Double_t y[nPts];
 		// Double_t deriv_x[nPts-1];
 		std::set<std::pair<Double_t,Double_t>> scoresX;
-		std::set<std::pair<Double_t,Double_t>> scoresY: //set of dropoff score and location (middle of pad)
+		std::set<std::pair<Double_t,Double_t>> scoresY; //set of dropoff score and location (middle of pad)
 
 		
 };
