@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	Double_t** scoresX;
 	Double_t** scoresY_T;
 	Double_t avgscores; //average of scores per row/column
-	scoresY[4][4];
+	Double_t scoresY[4][4];
 
 	Int_t nBinsX;
 	Int_t nBinsY;
