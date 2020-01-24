@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 	scoresY_T = Optimizer.createScoreMatrixY(file);
 	for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
-			scoresY[i][j] = scoresY_T[j][i]
+			scoresY[i][j] = scoresY_T[j][i];
 			cout << "scoresX: " << scoresX[i][j] << " index " << i << ", " << j << endl;
 			cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
 		}
