@@ -31,7 +31,8 @@ class OptimizerClass{
 		// Double_t x[nPts];
 		// Double_t y[nPts];
 		// Double_t deriv_x[nPts-1];
-		std::set<std::pair<Double_t,Double_t>> scores; //set of dropoff score and location (middle of pad)
+		std::set<std::pair<Double_t,Double_t>> scoresX;
+		std::set<std::pair<Double_t,Double_t>> scoresY: //set of dropoff score and location (middle of pad)
 
 		
 };
@@ -47,37 +48,44 @@ inline Int_t OptimizerClass::GetnBinsX(){
 }
 
 inline Double_t** OptimizerClass::createScoreMatrixX(TFile* file){
-	Double_t** mat_scores = 0;
-	mat_scores = new Double_t*[4];
+	Double_t** mat_scoresX = 0;
+	mat_scoresX = new Double_t*[4];
 	//calculate initial scores in X 
 	for(int i = 0; i < 4; i++){
-		mat_scores[i] = new Double_t[4];
+		mat_scoresX[i] = new Double_t[4];
 		TString histname = Form("h_x_eff_0_%i",i);
 		TH1F* hist = (TH1F*)file->Get(histname);
-		scores = calcDropoffs(hist);
+		scoresX = calcDropoffs(hist);
 		for(int sc = 0; sc < 4; sc++){
 			std::set<std::pair<Double_t,Double_t>>::iterator it = std::next(scores.begin(),sc);
-			mat_scores[i][sc] = std::get<1>(*it);
+			mat_scoresX[i][sc] = std::get<1>(*it);
 		}		
 	}
-	return mat_scores;
+	return mat_scoresX;
 }
 
 inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
-	Double_t** mat_scores = 0;
-	mat_scores = new Double_t*[4];
+	
+	Double_t** mat_scoresY = 0;
+	cout << "point 1" << endl;
+	mat_scoresY = new Double_t*[4];
+	cout << "point 2" << endl;
 	//calculate initial scores in Y
 	for(int i = 0; i < 4; i++){
-		mat_scores[i] = new Double_t[4];
+		
+		mat_scoresY[i] = new Double_t[4];
 		TString histname = Form("h_y_eff_0_%i",i);
 		TH1F* hist = (TH1F*)file->Get(histname);
-		scores = calcDropoffs(hist);
+		scoresY = calcDropoffs(hist);
+		cout << "point 3" << endl;
 		for(int sc = 0; sc < 4; sc++){
+			
 			std::set<std::pair<Double_t,Double_t>>::iterator it = std::next(scores.begin(),sc);
-			mat_scores[sc][i] = std::get<1>(*it);
-		}		
+			mat_scoresY[sc][i] = std::get<1>(*it);
+			cout << "point 4" << endl;
+		}
 	}
-	return mat_scores;
+	return mat_scoresY;
 }
 
 inline std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* hist){
