@@ -77,11 +77,12 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 		TString histname = Form("h_y_eff_0_%i",i);
 		TH1F* hist = (TH1F*)file->Get(histname);
 		scoresY = calcDropoffs(hist);
-		cout << "scoresY size: " << scoresY.max_size() << endl;
+		cout << "scoresY size: " << scoresY.size() << endl;
 		cout << "point 3" << endl;
 		for(int sc = 0; sc < 4; sc++){
 			cout << "sc: " << sc << endl;
 			std::set<std::pair<Double_t,Double_t>>::iterator it = std::next(scoresY.begin(),sc);
+			cout << "here" << endl;
 			mat_scoresY[sc][i] = std::get<1>(*it);
 			cout << "point 4" << endl;
 		}
