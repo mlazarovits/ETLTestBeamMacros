@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
 	set<pair<Double_t, Double_t>> tmpscores;
 	Double_t** scoresX;
+	Double_t** scoresY;
 	Double_t avgscores; //average of scores per row/column
 
 	Int_t nBinsX;
@@ -28,8 +29,12 @@ int main(int argc, char **argv)
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
 	scoresX = Optimizer.createScoreMatrixX(file);
 	scoresY = Optimizer.createScoreMatrixY(file);
-	cout << "size scoresX: " << scoresX.max_size() << endl;
-	cout << "size scoresY: " << scoresY.max_size() << endl;
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4; j++){
+			cout << "scoresX: " << scoresX[i][j] << "index " << i << ", " << j << endl;
+			cout << "scoresY: " << scoresY[i][j] << "index " << i << ", " << j << endl;
+		}
+	}
 
 	// nBinsX = Optimizer.GetnBinsX();
 	// nBinsY = Optimizer.GetnBinsY();
