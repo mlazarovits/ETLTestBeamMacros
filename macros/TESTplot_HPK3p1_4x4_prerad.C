@@ -16,6 +16,8 @@ int main(int argc, char **argv)
 	Double_t** scoresY_T;
 	Double_t avgscores; //average of scores per row/column
 	Double_t scoresY[4][4];
+	Double_t scores[4][4];
+	Double_t globalscore = 1.0;
 
 	Int_t nBinsX;
 	Int_t nBinsY;
@@ -33,10 +35,14 @@ int main(int argc, char **argv)
 	for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
 			scoresY[i][j] = scoresY_T[j][i];
-			cout << "scoresX: " << scoresX[i][j] << " index " << i << ", " << j << endl;
-			cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
+			scores[i][j] = scoresY[i][j] + scoresX[i][j];
+			globalscore = globalscore*scores[i][j];
+			// cout << "scoresX: " << scoresX[i][j] << " index " << i << ", " << j << endl;
+			// cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
 		}
 	}
+	cout << "globalscore: " << sqrt(globalscore) << endl;
+
 
 	
 	// //shift histogram

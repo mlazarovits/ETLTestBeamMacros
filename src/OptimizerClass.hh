@@ -86,21 +86,8 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 
 inline std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* hist){
 	
-	// TFile* file = TFile::Open("~/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/HPK3p1_4x4_prerad.root");
-	// TString histname = "h_x_eff_0_2";
-
-	// cout << "histogram: " << histname << endl;
-
-	// TH1F* hist = (TH1F*)file->Get(histname);
-
-	
 
 	TGraph* graph = new TGraph(hist);
-	graph->GetXaxis()->SetTitle("x distance (mm)");
-	graph->GetYaxis()->SetTitle("efficiency");
-	graph->SetMarkerStyle(kStar);
-
-	graph->Draw();
 
 	Int_t nPts = graph->GetN();
 	Double_t x[nPts];
@@ -122,29 +109,15 @@ inline std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* 
 	
 	
 	
-	TGraph* g_deriv = new TGraph(nPts,x,deriv_x);
-	g_deriv->SetTitle("Squared Derivative of 1D profile");
-	g_deriv->GetXaxis()->SetTitle("x distance (mm)");
-	g_deriv->GetYaxis()->SetTitle("Derivative squared");
-	g_deriv->SetMarkerStyle(kStar);
-	TCanvas* cv = new TCanvas();
-	cv->cd();
-	g_deriv->Draw();
+	// TGraph* g_deriv = new TGraph(nPts,x,deriv_x);
+	// g_deriv->SetTitle("Squared Derivative of 1D profile");
+	// g_deriv->GetXaxis()->SetTitle("x distance (mm)");
+	// g_deriv->GetYaxis()->SetTitle("Derivative squared");
+	// g_deriv->SetMarkerStyle(kStar);
+	// TCanvas* cv = new TCanvas();
+	// cv->cd();
+	// g_deriv->Draw();
 
-	// cout << "locations" << endl;
-	// cout << "spike 1: " << x[0] << " to " << x[31] << endl;
-	// cout << "spike 2: " << x[32] << " to " << x[63] << endl;
-	// cout << "spike 3: " << x[64] << " to " << x[95] << endl;
-	// cout << "spike 4: " << x[96] << " to " << x[127] << endl;
-	// cout << "spike 5: " << x[128] << " to " << x[159] << endl;
-
-	// cout << "amplitudes" << endl;
-	// cout << "spike 1: " << *max_element(deriv_x,deriv_x+nPts/5) << endl;
-	// cout << "spike 2: " << *max_element(deriv_x+nPts/5,deriv_x+2*nPts/5) << endl;
-	// cout << "spike 3: " << *max_element(deriv_x+2*nPts/5,deriv_x+3*nPts/5) << endl;
-	// cout << "spike 4: " << *max_element(deriv_x+3*nPts/5,deriv_x+4*nPts/5) << endl;
-	// cout << "spike 5: " << *max_element(deriv_x+4*nPts/5,deriv_x+nPts) << endl;
-	
 	Double_t spike1 = *std::max_element(deriv_x,deriv_x+nPts/5);
 	Double_t spike2 = *std::max_element(deriv_x+nPts/5,deriv_x+2*nPts/5);
 	Double_t spike3 = *std::max_element(deriv_x+2*nPts/5,deriv_x+3*nPts/5);
@@ -162,8 +135,10 @@ inline std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* 
 	Int_t mid3 = (pos3+pos4)/2;
 	Int_t mid4 = (pos4+pos5)/2;
 
+	//CHANGE POSITION TO RETURN POSITION OF SPIKE
+
 	Int_t mids[4] = {mid1, mid2, mid3, mid4};
-	Double_t spikes[4] = {spike1+spike2,spike2+spike3, spike3+spike4, spike4+spike5};
+	Double_t spikes[4] = {spike1+spike2, spike2+spike3, spike3+spike4, spike4+spike5};
 	
 	std::set<std::pair<Double_t,Double_t>> dropoffscores;
 
@@ -176,22 +151,22 @@ inline std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* 
 	return dropoffscores;
 }
 
-// inline void OptimizerClass::Optimizerplotter(TH1* hist,Double_t* x, Double_t* deriv_x){
-// 	TGraph* graph = new TGraph(hist);
-// 	graph->GetXaxis()->SetTitle("x distance (mm)");
-// 	graph->GetYaxis()->SetTitle("efficiency");
-// 	graph->SetMarkerStyle(kStar);
-// 	graph->Draw();
+inline void OptimizerClass::Optimizerplotter(TH1* hist, Int_t nPts, Double_t* x, Double_t* deriv_x){
+	TGraph* graph = new TGraph(hist);
+	graph->GetXaxis()->SetTitle("x distance (mm)");
+	graph->GetYaxis()->SetTitle("efficiency");
+	graph->SetMarkerStyle(kStar);
+	graph->Draw();
 
-// 	TGraph* g_deriv = new TGraph(nPts,x,deriv_x);
-// 	g_deriv->SetTitle("Squared Derivative of 1D profile");
-// 	g_deriv->GetXaxis()->SetTitle("x distance (mm)");
-// 	g_deriv->GetYaxis()->SetTitle("Derivative squared");
-// 	g_deriv->SetMarkerStyle(kStar);
-// 	TCanvas* cv = new TCanvas();
-// 	cv->cd();
-// 	g_deriv->Draw();
-// }
+	TGraph* g_deriv = new TGraph(nPts,x,deriv_x);
+	g_deriv->SetTitle("Squared Derivative of 1D profile");
+	g_deriv->GetXaxis()->SetTitle("x distance (mm)");
+	g_deriv->GetYaxis()->SetTitle("Derivative squared");
+	g_deriv->SetMarkerStyle(kStar);
+	TCanvas* cv = new TCanvas();
+	cv->cd();
+	g_deriv->Draw();
+}
 
 inline void OptimizerClass::createHistograms(TString tag, Double_t Xmin, Double_t Xmax, Double_t Ymin, Double_t Ymax){
 	map_plotter mp;
