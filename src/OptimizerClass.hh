@@ -19,7 +19,7 @@ class OptimizerClass{
 		Int_t nBinsY;
 		Int_t nBinsX;
 
-		void Optimizerplotter(TH1* hist, Double_t* x, Double_t* deriv_x);
+		void Optimizerplotter(TH1* hist, Int_t nPts, Double_t* x, Double_t* deriv_x;
 
 		Double_t** createScoreMatrixX(TFile* file);
 		Double_t** createScoreMatrixY(TFile* file);
