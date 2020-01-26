@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 	Double_t maxX = 20.;
 	Double_t minY = 30.;
 	Double_t maxY = 38.;
-	set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
+	// set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
 	set<pair<Double_t, Double_t>> tmpscores;
 	Double_t** scoresX;
 	Double_t** scoresY_T;
