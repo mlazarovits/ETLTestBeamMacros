@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 			// cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
 		}
 	}
-	cout << "globalscore: " << sqrt(globalscore) << endl;
+	cout << "globalscore: " << pow(globalscore,1.0/16.0) << endl;
 
 
 	
