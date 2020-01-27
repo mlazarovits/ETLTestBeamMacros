@@ -65,17 +65,17 @@ int main(int argc, char **argv)
 	}
 
 	//shift histogram - Y
-	for(int i = -10; i < 11; i++){
-		shifted_globalscore = 0.0;
-		shiftY = i*0.05;
-		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
-		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
-		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
-		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
+	// for(int i = -10; i < 11; i++){
+	// 	shifted_globalscore = 0.0;
+	// 	shiftY = i*0.05;
+	// 	Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
+	// 	shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
+	// 	shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
+	// 	shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
-		shiftsY.push_back(shiftY);
-		shifted_scoresY.push_back(shifted_globalscore);
-	}
+	// 	shiftsY.push_back(shiftY);
+	// 	shifted_scoresY.push_back(shifted_globalscore);
+	// }
 
 
 
