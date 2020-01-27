@@ -39,16 +39,13 @@ int main(int argc, char **argv)
 	OptimizerClass Optimizer;
 	// Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
-	TFile* shift_file = TFile::Open(g_pathname+shifted_histname+".root");
 	scoresX = Optimizer.createScoreMatrixX(file);
 	scoresY_T = Optimizer.createScoreMatrixY(file);
 	og_globalscore = Optimizer.calcScores(scoresX, scoresY_T);
 
 
 	
-	Optimizer.createHistograms(shifted_histname,minX+shiftX,maxX+shiftX,minY,maxY);
-	Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
-
+	TFile* shift_file = new TFile(g_pathname+shifted_histname+".root","RECREATE");
 
 	
 	// //shift histogram - X
@@ -76,6 +73,19 @@ int main(int argc, char **argv)
 		shiftsY.push_back(shiftY);
 		shifted_scoresY.push_back(shifted_globalscore);
 	}
+
+	TGraph* gr_xshift = new TGraph(shiftsX,shifted_scoresX);
+	TGraph* gr_yshift = new TGraph(shiftsY,shifted_scoresY);
+
+	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
+	TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
+
+	TFile* f_shiftsx = new TFile("f_shiftsx",'RECREATE');
+	TFile* f_shiftsy = new TFile("f_shiftsy",'RECREATE');
+
+	cv_x->cd();
+	gr_xshift->Draw();
+
 
 
 
