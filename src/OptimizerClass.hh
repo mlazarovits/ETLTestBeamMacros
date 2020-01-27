@@ -23,6 +23,7 @@ class OptimizerClass{
 
 		Double_t** createScoreMatrixX(TFile* file);
 		Double_t** createScoreMatrixY(TFile* file);
+		Double_t calcScores(Double_t** scoresX, Double_t** scoresY_T);
 		// Double_t mat_scores[4][4];
 
 	private:
@@ -82,6 +83,24 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 		}
 	}
 	return mat_scoresY;
+}
+
+inline Double_t calcScores(Double_t** scoresX, Double_t** scoresY_T){
+	Double_t globalscore = 1.0;
+	Double_t scoresY[4][4];
+	Double_t scores[4][4];
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4; j++){
+			scoresY[i][j] = scoresY_T[j][i];
+			scores[i][j] = scoresY[i][j] + scoresX[i][j];
+			globalscore = globalscore*scores[i][j];
+			// cout << "scoresX: " << scoresX[i][j] << " index " << i << ", " << j << endl;
+			// cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
+		}
+	}
+	globalscore = pow(globalscore,1.0/16.0);
+	// cout << "globalscore: " << pow(globalscore,1.0/16.0) << endl;
+	return globalscore;
 }
 
 inline std::set<std::pair<Double_t,Double_t>> OptimizerClass::calcDropoffs(TH1* hist){

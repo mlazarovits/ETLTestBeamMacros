@@ -10,17 +10,26 @@ int main(int argc, char **argv)
 	Double_t maxX = 20.;
 	Double_t minY = 30.;
 	Double_t maxY = 38.;
-	// set<pair<Double_t, Double_t>> scores; //set of dropoff score and location (middle of pad)
-	set<pair<Double_t, Double_t>> tmpscores;
+	
 	Double_t** scoresX;
 	Double_t** scoresY_T;
-	Double_t avgscores; //average of scores per row/column
-	Double_t scoresY[4][4];
-	Double_t scores[4][4];
-	Double_t globalscore = 1.0;
 
-	Int_t nBinsX;
-	Int_t nBinsY;
+	Double_t** shift_scoresX;
+	Double_t** shift_scoresYT;
+
+	Double_t og_globalscore;
+	Double_t shifted_globalscore;
+
+	Double_t shiftX;
+	Double_t shiftY;
+
+	std::vector<Double_t> shifted_scoresX;
+	std::vector<Double_t> shifted_scoresY;
+
+	std::vector<Double_t> shiftsX;
+	std::vector<Double_t> shiftsY;
+
+
 
 	TString g_pathname = "/uscms/homes/m/mlazarov/work/CMSSW_9_2_6/src/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/";
 	TString og_histname = "HPK3p1_4x4_prerad";
@@ -32,37 +41,40 @@ int main(int argc, char **argv)
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
 	scoresX = Optimizer.createScoreMatrixX(file);
 	scoresY_T = Optimizer.createScoreMatrixY(file);
-	for(int i = 0; i < 4; i++){
-		for(int j = 0; j < 4; j++){
-			scoresY[i][j] = scoresY_T[j][i];
-			scores[i][j] = scoresY[i][j] + scoresX[i][j];
-			globalscore = globalscore*scores[i][j];
-			// cout << "scoresX: " << scoresX[i][j] << " index " << i << ", " << j << endl;
-			// cout << "scoresY: " << scoresY[i][j] << " index " << i << ", " << j << endl;
-		}
-	}
-	cout << "globalscore: " << pow(globalscore,1.0/16.0) << endl;
+	og_globalscore = Optimizer.calcScores(scoresX, scoresY_T);
+	
 
 
 	
-	// //shift histogram
-	// Optimizer.createHistograms(shifted_histname,minX+0.05,maxX+0.05,minY,maxY);
-	// shift_matscoresX = Optimizer.createScoreMatrixX(shift_file);
+	// //shift histogram - X
+	for(int i = -10; i < 11; i++){
+		shifted_globalscore = 0.0;
+		shiftX = i*0.05;
+		Optimizer.createHistograms(shifted_histname,minX+shift,maxX+shift,minY,maxY);
+		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
+		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
+		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
+		shiftsX.push_back(shiftX);
+		shifted_scoresX.push_back(shifted_globalscore);
+	}
+
+	//shift histogram - Y
+	for(int i = -10; i < 11; i++){
+		shifted_globalscore = 0.0;
+		shiftY = i*0.05;
+		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shift,maxY+shift);
+		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
+		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
+		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
+
+		shiftsY.push_back(shiftY);
+		shifted_scoresY.push_back(shifted_globalscore);
+	}
+
+	
 	// //compare shifted scores with OG scores
-	// for(int j = 0; j < 4; j++){
-	// 	for(int i = 0; i < 4; i++){
-	// 		if(og_matscoresX[j][i] > shift_matscoresX[j][i]){
-
-	// 		}
-	// 		else if(og_matscoresX[j][i] < shift_matscoresX[j][i]){
-
-	// 		}
-	// 		else if(og_matscoresX[j][i] == shift_matscoresX[j][i]){
-
-	// 		}
-	// 	}
-	// }
+	
 
 
 
