@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 		shifted_scoresX.push_back(shifted_globalscore);
 	}
 
-	shift histogram - Y
+	// shift histogram - Y
 	for(int i = -10; i < 11; i++){
 		shifted_globalscore = 0.0;
 		shiftY = i*0.05;
