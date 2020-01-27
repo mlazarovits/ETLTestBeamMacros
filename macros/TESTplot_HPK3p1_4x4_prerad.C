@@ -23,11 +23,17 @@ int main(int argc, char **argv)
 	Double_t shiftX = 0.0;
 	Double_t shiftY = 0.0;
 
-	std::vector<Double_t> shifted_scoresX;
-	std::vector<Double_t> shifted_scoresY;
+	TVectorD shifted_scoresX;
+	TVectorD shifted_scoresY;
 
-	std::vector<Double_t> shiftsX;
-	std::vector<Double_t> shiftsY;
+	TVectorD shiftsX;
+	TVectorD shiftsY;
+
+	// std::vector<Double_t> shifted_scoresX;
+	// std::vector<Double_t> shifted_scoresY;
+
+	// std::vector<Double_t> shiftsX;
+	// std::vector<Double_t> shiftsY;
 
 
 
@@ -42,7 +48,6 @@ int main(int argc, char **argv)
 	scoresX = Optimizer.createScoreMatrixX(file);
 	scoresY_T = Optimizer.createScoreMatrixY(file);
 	og_globalscore = Optimizer.calcScores(scoresX, scoresY_T);
-
 
 	
 	TFile* shift_file = new TFile(g_pathname+shifted_histname+".root","RECREATE");
@@ -80,11 +85,21 @@ int main(int argc, char **argv)
 	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
 	TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
 
-	TFile* f_shiftsx = new TFile("f_shiftsx",'RECREATE');
-	TFile* f_shiftsy = new TFile("f_shiftsy",'RECREATE');
+	TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
+	TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
 
+
+	f_shiftsx->cd();
 	cv_x->cd();
 	gr_xshift->Draw();
+	f_shiftsx->Write();
+	f_shiftsx->Close();
+
+	f_shiftsy->cd();
+	cv_y->cd();
+	gr_yshift->Draw();
+	f_shiftsy->Write();
+	f_shiftsy->Close();
 
 
 
