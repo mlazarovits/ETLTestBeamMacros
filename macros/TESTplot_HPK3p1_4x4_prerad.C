@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	Double_t shiftX = 0.0;
 	Double_t shiftY = 0.0;
 
-	TVectorD shifted_scoresX;
+	TVectorD shifted_scoresX = new TVectorD();
 	TVectorD shifted_scoresY;
 
 	TVectorD shiftsX;
