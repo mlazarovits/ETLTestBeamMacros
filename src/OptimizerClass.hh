@@ -85,7 +85,7 @@ inline Double_t** OptimizerClass::createScoreMatrixY(TFile* file){
 	return mat_scoresY;
 }
 
-inline Double_t calcScores(Double_t** scoresX, Double_t** scoresY_T){
+inline Double_t OptimizerClass::calcScores(Double_t** scoresX, Double_t** scoresY_T){
 	Double_t globalscore = 1.0;
 	Double_t scoresY[4][4];
 	Double_t scores[4][4];
