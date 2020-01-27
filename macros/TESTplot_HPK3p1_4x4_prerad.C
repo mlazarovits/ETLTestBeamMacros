@@ -20,8 +20,8 @@ int main(int argc, char **argv)
 	Double_t og_globalscore;
 	Double_t shifted_globalscore;
 
-	Double_t shiftX;
-	Double_t shiftY;
+	Double_t shiftX = 0.0;
+	Double_t shiftY = 0.0;
 
 	std::vector<Double_t> shifted_scoresX;
 	std::vector<Double_t> shifted_scoresY;
@@ -39,10 +39,15 @@ int main(int argc, char **argv)
 	OptimizerClass Optimizer;
 	// Optimizer.createHistograms(og_histname,minX,maxX,minY,maxY);
 	TFile* file = TFile::Open(g_pathname+og_histname+".root");
+	TFile* shift_file = TFile::Open(g_pathname+shifted_histname+".root");
 	scoresX = Optimizer.createScoreMatrixX(file);
 	scoresY_T = Optimizer.createScoreMatrixY(file);
 	og_globalscore = Optimizer.calcScores(scoresX, scoresY_T);
+
+
 	
+	Optimizer.createHistograms(shifted_histname,minX+shiftX,maxX+shiftX,minY,maxY);
+	Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
 
 
 	
@@ -50,7 +55,7 @@ int main(int argc, char **argv)
 	for(int i = -10; i < 11; i++){
 		shifted_globalscore = 0.0;
 		shiftX = i*0.05;
-		Optimizer.createHistograms(shifted_histname,minX+shift,maxX+shift,minY,maxY);
+		Optimizer.createHistograms(shifted_histname,minX+shiftX,maxX+shiftX,minY,maxY);
 		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
 		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
 		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
@@ -63,7 +68,7 @@ int main(int argc, char **argv)
 	for(int i = -10; i < 11; i++){
 		shifted_globalscore = 0.0;
 		shiftY = i*0.05;
-		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shift,maxY+shift);
+		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
 		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
 		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
 		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
@@ -71,6 +76,8 @@ int main(int argc, char **argv)
 		shiftsY.push_back(shiftY);
 		shifted_scoresY.push_back(shifted_globalscore);
 	}
+
+
 
 	
 	// //compare shifted scores with OG scores
