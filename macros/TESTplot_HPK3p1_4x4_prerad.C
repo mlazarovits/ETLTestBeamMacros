@@ -82,11 +82,11 @@ int main(int argc, char **argv)
 		shifted_globalscore = 0.0;
 		shiftY = i*0.05;
 		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
-		cout << 
+		cout << "shiftY: " << shiftY << endl;
 		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
 		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
 		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
-		cout << "shiftY: " << shiftY << endl;
+		
 		shiftsY.push_back(shiftY);
 		shifted_scoresY.push_back(shifted_globalscore);
 	}
