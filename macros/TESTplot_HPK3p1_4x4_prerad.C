@@ -23,8 +23,8 @@ int main(int argc, char **argv)
 	Double_t shiftX = 0.0;
 	Double_t shiftY = 0.0;
 
-	Double_t shiftsX[20];
-	Double_t shiftsY[20];
+	// Double_t shiftsX[20];
+	// Double_t shiftsY[20];
 
 	// Double_t shifted_scoresX[20];
 	// Double_t shifted_scores[20];
