@@ -23,17 +23,27 @@ int main(int argc, char **argv)
 	Double_t shiftX = 0.0;
 	Double_t shiftY = 0.0;
 
-	TVectorD* shifted_scoresX = new TVectorD();
-	TVectorD shifted_scoresY;
+	Double_t shiftsX[20];
+	Double_t shiftsY[20];
 
-	TVectorD shiftsX;
-	TVectorD shiftsY;
+	// Double_t shifted_scoresX[20];
+	// Double_t shifted_scores[20];
 
-	// std::vector<Double_t> shifted_scoresX;
-	// std::vector<Double_t> shifted_scoresY;
+	// TVectorT<Double_t> shifted_scoresX = new TVectorD();
 
-	// std::vector<Double_t> shiftsX;
-	// std::vector<Double_t> shiftsY;
+	// typedef TVectorT<Double_t> shifted_scoresX;
+
+	// TVectorD shifted_scoresY;
+
+	// TVectorD shiftsX;
+	//DONT USE TVECTORS - SWITCH TO ARRAYS
+	// TVectorD shiftsY;
+
+	std::vector<Double_t> shifted_scoresX;
+	std::vector<Double_t> shifted_scoresY;
+
+	std::vector<Double_t> shiftsX;
+	std::vector<Double_t> shiftsY;
 
 
 
@@ -79,7 +89,7 @@ int main(int argc, char **argv)
 		shifted_scoresY.push_back(shifted_globalscore);
 	}
 
-	TGraph* gr_xshift = new TGraph(shiftsX,shifted_scoresX);
+	TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
 	TGraph* gr_yshift = new TGraph(shiftsY,shifted_scoresY);
 
 	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
