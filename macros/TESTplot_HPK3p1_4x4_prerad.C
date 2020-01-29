@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 	}
 
 	TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
-	TGraph* gr_yshift = new TGraph(shiftsY,shifted_scoresY);
+	TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
 
 	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
 	TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
