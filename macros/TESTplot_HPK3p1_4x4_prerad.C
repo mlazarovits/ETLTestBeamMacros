@@ -62,22 +62,27 @@ int main(int argc, char **argv)
 	og_globalscore = Optimizer.calcScores(scoresX, scoresY_T);
 
 	
-	TFile* shift_file = new TFile(g_pathname+shifted_histname+".root","RECREATE");
+	// TFile* shift_file = new TFile(g_pathname+shifted_histname+".root","RECREATE");
 
 	
 	// //shift histogram - X
 	for(int i = -10; i < 11; i++){
 		shifted_globalscore = 0.0;
 		shiftX = i*0.05;
-		TString nameX = Form(shifted_histname+"%d.root",shiftX);
-		if(!gSystem->AccessPathName(nameX)){
+		TString nameX = Form(shifted_histname+"_%d.root",shiftX);
+		if(!gSystem->AccessPathName(nameX)){ //if file exists
+			files.push_back(new TFile(nameX,"RECREATE"));
+		}
+		else if(gSystem->AccessPathName(nameX)){ //if file doesn't exist
+			Optimizer.createHistograms(nameX,minX+shiftX,maxX+shiftX,minY,maxY);
 			files.push_back(new TFile(nameX,"RECREATE"));
 		}
 
-		Optimizer.createHistograms(shifted_histname,minX+shiftX,maxX+shiftX,minY,maxY);
+		
 		cout << "shiftX: " << shiftX << endl;
-		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
-		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
+		cout << nameX << " " << files[i] << endl;
+		shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
+		shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
 		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
 		shiftsX.push_back(shiftX);
