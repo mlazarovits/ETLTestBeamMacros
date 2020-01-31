@@ -90,45 +90,45 @@ int main(int argc, char **argv)
 	}
 
 	// shift histogram - Y
-	for(int i = -10; i < 11; i++){
-		shifted_globalscore = 0.0;
-		shiftY = i*0.05;
-		TString nameY = Form(shifted_histname+"%d.root",shiftY);
-		if(!gSystem->AccessPathName(nameY)){
-			files.push_back(new TFile(nameY,"RECREATE"));
-		}
+	// for(int i = -10; i < 11; i++){
+	// 	shifted_globalscore = 0.0;
+	// 	shiftY = i*0.05;
+	// 	TString nameY = Form(shifted_histname+"%d.root",shiftY);
+	// 	if(!gSystem->AccessPathName(nameY)){
+	// 		files.push_back(new TFile(nameY,"RECREATE"));
+	// 	}
 
-		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
-		cout << "shiftY: " << shiftY << endl;
-		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
-		shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
-		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
+	// 	Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
+	// 	cout << "shiftY: " << shiftY << endl;
+	// 	shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
+	// 	shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
+	// 	shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 		
-		shiftsY.push_back(shiftY);
-		shifted_scoresY.push_back(shifted_globalscore);
-	}
+	// 	shiftsY.push_back(shiftY);
+	// 	shifted_scoresY.push_back(shifted_globalscore);
+	// }
 
-	TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
-	TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
+	// TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
+	// TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
 
-	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
-	TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
+	// TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
+	// TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
 
-	TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
-	TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
+	// TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
+	// TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
 
 
-	f_shiftsx->cd();
-	cv_x->cd();
-	gr_xshift->Draw();
-	f_shiftsx->Write();
-	f_shiftsx->Close();
+	// f_shiftsx->cd();
+	// cv_x->cd();
+	// gr_xshift->Draw();
+	// f_shiftsx->Write();
+	// f_shiftsx->Close();
 
-	f_shiftsy->cd();
-	cv_y->cd();
-	gr_yshift->Draw();
-	f_shiftsy->Write();
-	f_shiftsy->Close();
+	// f_shiftsy->cd();
+	// cv_y->cd();
+	// gr_yshift->Draw();
+	// f_shiftsy->Write();
+	// f_shiftsy->Close();
 
 
 
