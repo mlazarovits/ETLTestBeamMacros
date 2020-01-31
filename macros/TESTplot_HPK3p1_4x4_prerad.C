@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
 		shiftX = -0.5 + 0.05*i;
 		TString nameX = Form(shifted_histname+"_X%d.root",shiftX);
-		cout << nameX << endl;
+		cout << shiftX << endl;
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
 			cout << nameX << " exists" << endl;
 			// files.push_back(shift_file = TFile::Open(nameX));
