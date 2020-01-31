@@ -45,6 +45,8 @@ int main(int argc, char **argv)
 	std::vector<Double_t> shiftsX;
 	std::vector<Double_t> shiftsY;
 
+	std::vector<TFile*> files;
+
 
 
 	TString g_pathname = "/uscms/homes/m/mlazarov/work/CMSSW_9_2_6/src/ETLTestBeamMacros/output/HPK3p1_4x4_prerad/";
@@ -67,6 +69,11 @@ int main(int argc, char **argv)
 	for(int i = -10; i < 11; i++){
 		shifted_globalscore = 0.0;
 		shiftX = i*0.05;
+		TString nameX = Form(shifted_histname+"%d.root",shiftX);
+		if(!gSystem->AccessPathName(nameX)){
+			files.push_back(new TFile(nameX,"RECREATE"));
+		}
+
 		Optimizer.createHistograms(shifted_histname,minX+shiftX,maxX+shiftX,minY,maxY);
 		cout << "shiftX: " << shiftX << endl;
 		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
@@ -81,6 +88,11 @@ int main(int argc, char **argv)
 	for(int i = -10; i < 11; i++){
 		shifted_globalscore = 0.0;
 		shiftY = i*0.05;
+		TString nameY = Form(shifted_histname+"%d.root",shiftY);
+		if(!gSystem->AccessPathName(nameY)){
+			files.push_back(new TFile(nameY,"RECREATE"));
+		}
+
 		Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
 		cout << "shiftY: " << shiftY << endl;
 		shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
