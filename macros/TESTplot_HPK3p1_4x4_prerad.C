@@ -49,12 +49,12 @@ int main(int argc, char **argv)
 	TFile* shift_file; // = new TFile(g_pathname+shifted_histname+".root","RECREATE");
 
 	//shift histogram - X
-	for(int i = 0; i < 20; i++){
+	for(int i = 0; i < 21; i++){
 		shift_file = NULL;
 		shifted_globalscore = 0.0;
 
 		shiftX = -0.5 + 0.05*i;
-		TString nameX = Form(shifted_histname+"_X%d.root",shiftX);
+		TString nameX = Form(shifted_histname+"_X%f.root",shiftX);
 		cout << shiftX << endl;
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
 			cout << nameX << " exists" << endl;
