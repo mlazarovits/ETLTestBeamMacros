@@ -55,11 +55,13 @@ int main(int argc, char **argv)
 
 		shiftX = -0.5 + 0.05*i;
 		TString nameX = Form(shifted_histname+"_X%d.root",shiftX);
-		
+		cout << nameX << endl;
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
+			cout << nameX << " exists" << endl;
 			files.push_back(shift_file = TFile::Open(nameX));
 		}
 		else if(gSystem->AccessPathName(nameX)){ //if file doesn't exist
+			cout << "making " << nameX << endl;
 			Optimizer.createHistograms(nameX,minX+shiftX,maxX+shiftX,minY,maxY);
 			files.push_back(shift_file = new TFile(nameX));
 		}
@@ -84,9 +86,11 @@ int main(int argc, char **argv)
 		TString nameY = Form(shifted_histname+"_Y%d.root",shiftY);
 		
 		if(!gSystem->AccessPathName(nameY)){ //if file exists
+			cout << nameY << " exists" << endl;
 			files.push_back(shift_file = TFile::Open(nameY));
 		}
 		else if(gSystem->AccessPathName(nameY)){ //if file doesn't exist
+			cout << "making " << nameY << endl;
 			Optimizer.createHistograms(nameY,minX,maxX,minY+shiftY,maxY+shiftY);
 			files.push_back(shift_file = new TFile(nameY));
 		}
