@@ -54,7 +54,7 @@ int main(int argc, char **argv)
 		shifted_globalscore = 0.0;
 
 		shiftX = -0.5 + 0.05*i;
-		TString nameX = Form(shifted_histname+"_X%2f.root",shiftX);
+		TString nameX = Form(shifted_histname+"_X%3f.root",shiftX);
 		cout << shiftX << endl;
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
 			cout << nameX << " exists" << endl;
