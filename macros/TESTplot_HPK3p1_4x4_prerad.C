@@ -20,24 +20,8 @@ int main(int argc, char **argv)
 	Double_t og_globalscore;
 	Double_t shifted_globalscore;
 
-	Double_t shiftX = 0.0;
-	Double_t shiftY = 0.0;
-
-	// Double_t shiftsX[20];
-	// Double_t shiftsY[20];
-
-	// Double_t shifted_scoresX[20];
-	// Double_t shifted_scores[20];
-
-	// TVectorT<Double_t> shifted_scoresX = new TVectorD();
-
-	// typedef TVectorT<Double_t> shifted_scoresX;
-
-	// TVectorD shifted_scoresY;
-
-	// TVectorD shiftsX;
-	//DONT USE TVECTORS - SWITCH TO ARRAYS
-	// TVectorD shiftsY;
+	Double_t shiftX;
+	Double_t shiftY;
 
 	std::vector<Double_t> shifted_scoresX;
 	std::vector<Double_t> shifted_scoresY;
@@ -62,96 +46,87 @@ int main(int argc, char **argv)
 	og_globalscore = Optimizer.calcScores(scoresX, scoresY_T);
 
 	
-	// TFile* shift_file = new TFile(g_pathname+shifted_histname+".root","RECREATE");
+	TFile* shift_file; // = new TFile(g_pathname+shifted_histname+".root","RECREATE");
 
-	
-	// //shift histogram - X
-	for(int i = -10; i < 11; i++){
+	//shift histogram - X
+	for(int i = 0; i < 20; i++){
+		shift_file = NULL;
 		shifted_globalscore = 0.0;
-		shiftX = i*0.05;
-		TString nameX = Form(shifted_histname+"_%d.root",shiftX);
+
+		shiftX = -0.5 + 0.05*i;
+		TString nameX = Form(shifted_histname+"_X%d.root",shiftX);
+		
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
-			files.push_back(new TFile(nameX,"RECREATE"));
+			files.push_back(shift_file = TFile::Open(nameX));
 		}
 		else if(gSystem->AccessPathName(nameX)){ //if file doesn't exist
 			Optimizer.createHistograms(nameX,minX+shiftX,maxX+shiftX,minY,maxY);
-			files.push_back(new TFile(nameX,"RECREATE"));
+			files.push_back(shift_file = new TFile(nameX));
 		}
 
-		
-		cout << "shiftX: " << shiftX << endl;
-		cout << nameX << " " << files[i] << endl;
 		shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
 		shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
 		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
 		shiftsX.push_back(shiftX);
 		shifted_scoresX.push_back(shifted_globalscore);
+
 	}
+	
+	
 
 	// shift histogram - Y
-	// for(int i = -10; i < 11; i++){
-	// 	shifted_globalscore = 0.0;
-	// 	shiftY = i*0.05;
-	// 	TString nameY = Form(shifted_histname+"%d.root",shiftY);
-	// 	if(!gSystem->AccessPathName(nameY)){
-	// 		files.push_back(new TFile(nameY,"RECREATE"));
-	// 	}
+	for(int i = 0; i < 2; i++){
+		shift_file = NULL;
+		shifted_globalscore = 0.0;
+		shiftY = -0.5 + 0.05*i;
 
-	// 	Optimizer.createHistograms(shifted_histname,minX,maxX,minY+shiftY,maxY+shiftY);
-	// 	cout << "shiftY: " << shiftY << endl;
-	// 	shift_scoresX = Optimizer.createScoreMatrixX(shift_file);
-	// 	shift_scoresYT  = Optimizer.createScoreMatrixY(shift_file);
-	// 	shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
+		TString nameY = Form(shifted_histname+"_Y%d.root",shiftY);
 		
-	// 	shiftsY.push_back(shiftY);
-	// 	shifted_scoresY.push_back(shifted_globalscore);
-	// }
+		if(!gSystem->AccessPathName(nameY)){ //if file exists
+			files.push_back(shift_file = TFile::Open(nameY));
+		}
+		else if(gSystem->AccessPathName(nameY)){ //if file doesn't exist
+			Optimizer.createHistograms(nameY,minX,maxX,minY+shiftY,maxY+shiftY);
+			files.push_back(shift_file = new TFile(nameY));
+		}
 
-	// TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
-	// TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
+		shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
+		shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
+		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
-	// TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
-	// TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
+		shiftsY.push_back(shiftY);
+		shifted_scoresY.push_back(shifted_globalscore);
+	}
 
-	// TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
-	// TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
+	TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
+	TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
 
+	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
+	TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
 
-	// f_shiftsx->cd();
-	// cv_x->cd();
-	// gr_xshift->Draw();
-	// f_shiftsx->Write();
-	// f_shiftsx->Close();
-
-	// f_shiftsy->cd();
-	// cv_y->cd();
-	// gr_yshift->Draw();
-	// f_shiftsy->Write();
-	// f_shiftsy->Close();
+	TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
+	TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
 
 
+	f_shiftsx->cd();
+	cv_x->cd();
+	gr_xshift->Draw();
+	f_shiftsx->Write();
+	f_shiftsx->Close();
+
+	f_shiftsy->cd();
+	cv_y->cd();
+	gr_yshift->Draw();
+	f_shiftsy->Write();
+	f_shiftsy->Close();
 
 
 	
-	// //compare shifted scores with OG scores
-	
 
 
 
 
-	
-
-	
-
-
-    //steps - how to work with ETLTestBeamMacros??
-	//3. shift histogram +0.5 mm/bin until edge (recalcuate score at each shift, keep if better than last shift)
-	//4. repeat step 4 with -0.5 mm/bin
-	//5. repeat for each direction
-    
-    	//1. create histogram from ETLTestBeamMacros macro (start w plot_HPK3p1_4x4_prerad.C)
-		//2. create instance of OptimizerClass -> use calcDropoffs on each 1D histogram (2D for loop - start with 1 direction)
 
 
 }
