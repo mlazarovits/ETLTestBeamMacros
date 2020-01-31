@@ -54,76 +54,76 @@ int main(int argc, char **argv)
 		shifted_globalscore = 0.0;
 
 		shiftX = -0.5 + 0.05*i;
-		TString nameX = Form(shifted_histname+"_X%.3f.root",shiftX);
+		TString nameX = Form(shifted_histname+"_X%.2f.root",shiftX);
 		cout << shiftX << endl;
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
 			cout << nameX << " exists" << endl;
-			// files.push_back(shift_file = TFile::Open(nameX));
+			files.push_back(shift_file = TFile::Open(nameX));
 		}
 		else if(gSystem->AccessPathName(nameX)){ //if file doesn't exist
 			cout << "making " << nameX << endl;
-			// Optimizer.createHistograms(nameX,minX+shiftX,maxX+shiftX,minY,maxY);
-			// files.push_back(shift_file = new TFile(nameX));
+			Optimizer.createHistograms(nameX,minX+shiftX,maxX+shiftX,minY,maxY);
+			files.push_back(shift_file = new TFile(nameX));
 		}
 
-		// shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
-		// shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
-		// shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
+		shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
+		shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
+		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
-		// shiftsX.push_back(shiftX);
-		// shifted_scoresX.push_back(shifted_globalscore);
+		shiftsX.push_back(shiftX);
+		shifted_scoresX.push_back(shifted_globalscore);
 
 	}
 	
 	
 
 	// shift histogram - Y
-	// for(int i = 0; i < 2; i++){
-	// 	shift_file = NULL;
-	// 	shifted_globalscore = 0.0;
-	// 	shiftY = -0.5 + 0.05*i;
+	for(int i = 0; i < 2; i++){
+		shift_file = NULL;
+		shifted_globalscore = 0.0;
+		shiftY = -0.5 + 0.05*i;
 
-	// 	TString nameY = Form(shifted_histname+"_Y%d.root",shiftY);
+		TString nameY = Form(shifted_histname+"_Y%d.root",shiftY);
 		
-	// 	if(!gSystem->AccessPathName(nameY)){ //if file exists
-	// 		cout << nameY << " exists" << endl;
-	// 		// files.push_back(shift_file = TFile::Open(nameY));
-	// 	}
-	// 	else if(gSystem->AccessPathName(nameY)){ //if file doesn't exist
-	// 		cout << "making " << nameY << endl;
-	// 		// Optimizer.createHistograms(nameY,minX,maxX,minY+shiftY,maxY+shiftY);
-	// 		// files.push_back(shift_file = new TFile(nameY));
-	// 	}
+		if(!gSystem->AccessPathName(nameY)){ //if file exists
+			cout << nameY << " exists" << endl;
+			files.push_back(shift_file = TFile::Open(nameY));
+		}
+		else if(gSystem->AccessPathName(nameY)){ //if file doesn't exist
+			cout << "making " << nameY << endl;
+			Optimizer.createHistograms(nameY,minX,maxX,minY+shiftY,maxY+shiftY);
+			files.push_back(shift_file = new TFile(nameY));
+		}
 
-	// 	shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
-	// 	shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
-	// 	shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
+		shift_scoresX = Optimizer.createScoreMatrixX(files[i]);
+		shift_scoresYT  = Optimizer.createScoreMatrixY(files[i]);
+		shifted_globalscore = Optimizer.calcScores(shift_scoresX,shift_scoresYT);
 
-	// 	shiftsY.push_back(shiftY);
-	// 	shifted_scoresY.push_back(shifted_globalscore);
-	// }
+		shiftsY.push_back(shiftY);
+		shifted_scoresY.push_back(shifted_globalscore);
+	}
 
-	// TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
-	// TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
+	TGraph* gr_xshift = new TGraph(shiftsX.size(),&(shiftsX[0]),&(shifted_scoresX[0]));
+	TGraph* gr_yshift = new TGraph(shiftsY.size(),&(shiftsY[0]),&(shifted_scoresY[0]));
 
-	// TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
-	// TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
+	TCanvas* cv_x = new TCanvas("cv_x","cv_x",800,600);
+	TCanvas* cv_y = new TCanvas("cv_y","cv_y",800,600);
 
-	// TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
-	// TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
+	TFile* f_shiftsx = new TFile("f_shiftsx","RECREATE");
+	TFile* f_shiftsy = new TFile("f_shiftsy","RECREATE");
 
 
-	// f_shiftsx->cd();
-	// cv_x->cd();
-	// gr_xshift->Draw();
-	// f_shiftsx->Write();
-	// f_shiftsx->Close();
+	f_shiftsx->cd();
+	cv_x->cd();
+	gr_xshift->Draw();
+	f_shiftsx->Write();
+	f_shiftsx->Close();
 
-	// f_shiftsy->cd();
-	// cv_y->cd();
-	// gr_yshift->Draw();
-	// f_shiftsy->Write();
-	// f_shiftsy->Close();
+	f_shiftsy->cd();
+	cv_y->cd();
+	gr_yshift->Draw();
+	f_shiftsy->Write();
+	f_shiftsy->Close();
 
 
 	
