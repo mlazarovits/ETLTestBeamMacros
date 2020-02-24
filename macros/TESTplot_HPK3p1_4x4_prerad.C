@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
 		shiftX = -0.5 + 0.05*i;
 		TString nameX = Form(shifted_histname+"_X%.2f.root",shiftX);
-		cout << shiftX << endl;
+		cout << "shift in X: " , shiftX << endl;
 		if(!gSystem->AccessPathName(nameX)){ //if file exists
 			cout << nameX << " exists" << endl;
 			files.push_back(shift_file = TFile::Open(nameX));
@@ -76,7 +76,6 @@ int main(int argc, char **argv)
 	}
 	
 	
-
 	// shift histogram - Y
 	for(int i = 0; i < 2; i++){
 		shift_file = NULL;
@@ -84,7 +83,7 @@ int main(int argc, char **argv)
 		shiftY = -0.5 + 0.05*i;
 
 		TString nameY = Form(shifted_histname+"_Y%d.root",shiftY);
-		
+		cout << "shift in Y: " , shiftY << endl;
 		if(!gSystem->AccessPathName(nameY)){ //if file exists
 			cout << nameY << " exists" << endl;
 			files.push_back(shift_file = TFile::Open(nameY));
