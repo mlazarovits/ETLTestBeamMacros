@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	TFile* shift_file; // = new TFile(g_pathname+shifted_histname+".root","RECREATE");
 
 	//shift histogram - X
-	for(int i = 0; i < 21; i++){
+	for(int i = 0; i < 5; i++){
 		shift_file = NULL;
 		shifted_globalscore = 0.0;
 
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	
 	
 	// shift histogram - Y
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < 5; i++){
 		shift_file = NULL;
 		shifted_globalscore = 0.0;
 		shiftY = -0.5 + 0.05*i;
